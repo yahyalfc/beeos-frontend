@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-commented-code */
 "use client";
 import React, {
   createContext,
@@ -106,7 +105,6 @@ export const CollectionSingleProvider: React.FC<CollectionsProviderProps> = ({
 
     const initUserCollectionFn = async (collectionId: string) => {
       const refCode = localStorage.getItem(formRefCode(collectionId));
-      console.log("REF CODE REF CODE", refCode)
 
       const res = await initCollectionUserMutation.mutateAsync({
         collectionId,
