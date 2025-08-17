@@ -155,12 +155,17 @@ export const CollectionSingleHeroContent: FC<
   const isUpcoming = collectionStatus
     ? collectionStatus.statusName === PROJECT_STATUSES.UPCOMING
     : false;
+  const isQuesting = collectionStatus
+    ? collectionStatus.statusName === PROJECT_STATUSES.QUESTING
+    : false;
 
   const minterActionLabel =
     phase === PHASES.PRE_PHASE
       ? "Check Wallet Status"
-      : isUpcoming
+      : isQuesting
       ? "Join Waitlist"
+      : isUpcoming
+      ? "Comming Soon"
       : "Mint";
 
   return (
@@ -188,7 +193,7 @@ export const CollectionSingleHeroContent: FC<
         />
 
         {/* Description */}
-        {phase === PHASES.PRE_PHASE || isUpcoming ? (
+        {phase === PHASES.PRE_PHASE || isUpcoming || isQuesting ? (
           <MinterDescription text={description} />
         ) : isEnded ? (
           <EndedMinterPhasesCards
@@ -213,7 +218,7 @@ export const CollectionSingleHeroContent: FC<
           price={nftPrice}
           totalSupply={amountNFT}
           onAction={
-            isUpcoming
+            isUpcoming || isQuesting
               ? handleJoinWhitelistClick
               : phase === PHASES.PRE_PHASE
               ? handleCheckUserState
@@ -222,10 +227,10 @@ export const CollectionSingleHeroContent: FC<
         />
         {/* )} */}
       </div>
-      {phase === PHASES.PRE_PHASE || isUpcoming ? (
+      {phase === PHASES.PRE_PHASE || isUpcoming || isQuesting ? (
         <DefaultButton size="wide" variant="ghost">
           Mint Starts&nbsp;-&nbsp;
-          {isUpcoming && collectionStatus ? (
+          {(isUpcoming || isQuesting) && collectionStatus ? (
             <span className="text-white">
               {new Date(collectionStatus.startsAt).toLocaleDateString("en-US", {
                 month: "numeric",

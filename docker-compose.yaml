@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: launchpad-nextjs
+    ports:
+      - "3120:3000"
+    restart: always
+    environment:
+      - HOSTNAME=0.0.0.0
+    env_file:
+      - .env

@@ -31,8 +31,15 @@ export const CollectionSingleTasks: FC<CollectionSingleTasksProps> = ({
     async (taskData: Task) => {
       if (completedTasks !== null && collectionData) {
         const status = collectionData.status.statusName;
-        if (status === PROJECT_STATUSES.QUESTING) {
-          toast.error("This collection is finished. You can't complete tasks.");
+        if (status === PROJECT_STATUSES.FINISHED) {
+          toast.error("Oops... The time for completing the tasks has expired");
+          return;
+        }
+
+        if (status === PROJECT_STATUSES.UPCOMING) {
+          toast.error(
+            "This collection is not yet started. You can't complete tasks."
+          );
           return;
         }
 
@@ -45,7 +52,7 @@ export const CollectionSingleTasks: FC<CollectionSingleTasksProps> = ({
         } catch {
           toast.error("Something went wrong! Please try again later :(");
         }
-        toast.error("Oops... The time for completing the tasks has expired");
+
         return;
       }
       toast.error("You need to Connect your Wallet first!", {

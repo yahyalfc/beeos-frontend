@@ -105,11 +105,12 @@ export const CollectionSingleProvider: React.FC<CollectionsProviderProps> = ({
     const isWalletExist = Boolean(isConnected && walletAddress);
 
     const initUserCollectionFn = async (collectionId: string) => {
-      // const refCode = localStorage.getItem(formRefCode(collectionId));
+      const refCode = localStorage.getItem(formRefCode(collectionId));
+      console.log("REF CODE REF CODE", refCode)
 
       const res = await initCollectionUserMutation.mutateAsync({
         collectionId,
-        refCode: null,
+        refCode,
       });
 
       if (!res.id) {

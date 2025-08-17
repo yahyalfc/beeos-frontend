@@ -1,36 +1,57 @@
-/* eslint-disable sonarjs/no-commented-code */
 "use client";
 
-import {
-  type FC,
-  //  useCallback
-} from "react";
+import { type FC, useCallback } from "react";
+
+import { toast } from "sonner";
 
 import { useCollectionSingleContext } from "@/components/providers/Collections.provider";
 import { ProfilePrizeInterface } from "@/components/shared/Interfaces/VectorInterfaces/ProfilePrizeInterface";
 import { ProfileRefInterface } from "@/components/shared/Interfaces/VectorInterfaces/ProfileRefInterface";
 import { ProfileXPInterface } from "@/components/shared/Interfaces/VectorInterfaces/ProfileXPInterface";
-// import { CopyIcon } from "@/components/shared/UI/Icons/Copy.icon";
+import { CopyIcon } from "@/components/shared/UI/Icons/Copy.icon";
 import { OffIcon } from "@/components/shared/UI/Icons/Off.icon";
-// import { copyToClipboard } from "@/helpers/copyToClipboard";
-// import { useUser } from "@/hooks/queries/use-users";
-// import { QUERIES } from "@/utils/constants";
-// import { toast } from "sonner";
+import { copyToClipboard } from "@/helpers/copyToClipboard";
+import { useUser } from "@/hooks/queries/use-users";
+import { PROJECT_STATUSES } from "@/types/collections";
+import { QUERIES } from "@/utils/constants";
 
 export const CollectionSingleProfileData: FC = ({}) => {
-  // const { data: userData } = useUser();
-  const { collectionProfile, isLoading } = useCollectionSingleContext();
+  const { data: userData } = useUser();
+  const { collectionProfile, collectionData, isLoading } =
+    useCollectionSingleContext();
 
-  // const handleCopyRefCode = useCallback(async () => {
-  //   if (userData && collectionProfile) {
-  //     await copyToClipboard({
-  //       value: `${window.location.href}?${QUERIES.REFERRAL_START}=${collectionProfile.referralCode}`,
-  //       successMessage: "Your Referral Link copied into clipboard!",
-  //     });
-  //   } else {
-  //     toast.error("Something went wrong! Try again later :(");
-  //   }
-  // }, [userData, collectionProfile]);
+  const handleCopyRefCode = useCallback(async () => {
+    if (userData && collectionProfile && collectionData) {
+      const collectionStatus = collectionData.status;
+      if (collectionStatus.statusName === PROJECT_STATUSES.UPCOMING) {
+        toast.error(
+          "This collection is not yet started. You can't copy referral link."
+        );
+        return;
+      }
+      if (collectionStatus.statusName === PROJECT_STATUSES.FINISHED) {
+        toast.error(
+          "This collection is finished. You can't copy referral link."
+        );
+        return;
+      }
+      if (collectionStatus.statusName === PROJECT_STATUSES.MINT) {
+        toast.error(
+          "This collection is in mint phase. You can't copy referral link."
+        );
+        return;
+      }
+
+      await copyToClipboard({
+        value: `${window.location.href}?${QUERIES.REFERRAL_START}=${collectionProfile.referralCode}`,
+        successMessage: "Your Referral Link copied into clipboard!",
+      });
+    } else {
+      toast.error("Something went wrong! Try again later :(");
+    }
+  }, [userData, collectionProfile, collectionData]);
+
+  const collectionStatus = collectionData?.status;
 
   return (
     <div className="mt-6 max-w-[1164px] mx-auto sm:grid flex flex-col sm:grid-cols-2 gap-4">
@@ -64,13 +85,17 @@ export const CollectionSingleProfileData: FC = ({}) => {
           <ProfileRefInterface />
           <div className="relative z-[2] flex items-center justify-between">
             <span className=" text-lg text-white">Referrals</span>
-            {/* <span
-              className="shrink-0 cursor-pointer"
-              role="button"
-              onClick={handleCopyRefCode}
-            >
-              <CopyIcon />
-            </span> */}
+            {collectionStatus &&
+            collectionStatus.statusName === PROJECT_STATUSES.QUESTING ? (
+              <span
+                className="shrink-0 cursor-pointer"
+                role="button"
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                onClick={handleCopyRefCode}
+              >
+                <CopyIcon />
+              </span>
+            ) : null}
           </div>
 
           <span className="relative z-[2] text-accent title-huge">
