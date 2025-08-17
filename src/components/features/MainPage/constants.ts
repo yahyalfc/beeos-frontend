@@ -1,0 +1,24 @@
+export const MAIN_ANIMATED_FIXED_SECTIONS_LENGTH = 520;
+
+export enum SECTIONS_SCROLL_TRIGGER_STARTS_NUMBERS {
+  FIRST_ORDER = 71,
+  SECOND_ORDER = 130,
+  THIRD_ORDER = 300,
+  FOURTH_ORDER = 450,
+}
+
+export enum SECTIONS_SCROLL_TRIGGER_STARTS {
+  FIRST_ORDER = `-${SECTIONS_SCROLL_TRIGGER_STARTS_NUMBERS.FIRST_ORDER}%`, // can't be used for any other section because of the hero Title animation
+  SECOND_ORDER = `-${SECTIONS_SCROLL_TRIGGER_STARTS_NUMBERS.SECOND_ORDER}%`,
+  THIRD_ORDER = `-${SECTIONS_SCROLL_TRIGGER_STARTS_NUMBERS.THIRD_ORDER}%`,
+  FOURTH_ORDER = `-${SECTIONS_SCROLL_TRIGGER_STARTS_NUMBERS.FOURTH_ORDER}%`,
+}
+
+export const MAIN_TITLES_ANIMATION_CONFIG = {
+  initialY: "120%",
+  initialRotation: 4,
+  exitY: "-120%",
+  exitRotation: -2,
+  staggerDelay: 0.2,
+  exitStaggerDelay: 0.1,
+} as const;
