@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable sonarjs/no-nested-conditional */
 /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -229,7 +230,7 @@ export const CollectionSingleHeroContent: FC<
       </div>
       {phase === PHASES.PRE_PHASE || isUpcoming || isQuesting ? (
         <DefaultButton size="wide" variant="ghost">
-          Mint Starts&nbsp;-&nbsp;
+          {isUpcoming ? "Questing" : "Mint"} Starts&nbsp;-&nbsp;
           {(isUpcoming || isQuesting) && collectionStatus ? (
             <span className="text-white">
               {new Date(collectionStatus.startsAt).toLocaleDateString("en-US", {
