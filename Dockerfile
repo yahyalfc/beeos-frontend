@@ -59,7 +59,7 @@ USER nextjs
 
 # --- ADD THESE LINES ---
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 3005
 
 # Start the server
 CMD ["node", "server.js"]
