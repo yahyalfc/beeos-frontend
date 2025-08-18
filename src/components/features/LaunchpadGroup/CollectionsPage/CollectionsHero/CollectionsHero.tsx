@@ -59,10 +59,10 @@ export const CollectionsHero: FC = ({}) => {
             </div>
             <div className="block">
               <div className="inline-flex items-center gap-5 md:gap-8 py-3 pl-4 md:pl-6 pr-[38px] relative">
-                <CollectionBannerPlate label="Floor Price" value="$29.77" />
+                <CollectionBannerPlate label="Floor Price" value="$31.59" />
                 <CollectionBannerPlate label="Items" value="2548" />
-                <CollectionBannerPlate label="Total Volume" value="$75.7K" />
-                <CollectionBannerPlate label="Listed" value="4.5%" />
+                <CollectionBannerPlate label="Total Volume" value="$220K" />
+                <CollectionBannerPlate label="Listed" value="4.4%" />
                 <BannerPlateInterface />
               </div>
             </div>
