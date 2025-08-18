@@ -137,8 +137,8 @@ export const Footer: FC = () => {
           <div className="flex flex-col gap-12 md:gap-16 items-start">
             <FooterNavBlock>
               <FooterNavTitle>Contact us</FooterNavTitle>
-              <a className="text-huge" href="mailto:hello@arenavs.com">
-                hello@arenavs.com
+              <a className="text-huge" href="mailto:hello@beeos2548.com">
+                hello@beeos2548.com
               </a>
             </FooterNavBlock>
             <FooterNavBlock>
