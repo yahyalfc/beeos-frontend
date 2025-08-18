@@ -18,21 +18,19 @@ interface MutationContext {
 }
 
 export function useCompleteTask(
-  options?: UseMutationOptions<
-    Task,
-    ApiError,
-    string,
-    MutationContext
-  >
+  options?: UseMutationOptions<Task, ApiError, string, MutationContext>
 ): UseMutationResult<Task, ApiError, string> {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (taskId: string) => TasksService.finishTask(taskId),
     onSuccess: (data, variables, context) => {
-      void queryClient.invalidateQueries({ queryKey: tasksKeys.details() });
-      void queryClient.invalidateQueries({ queryKey: userKeys.details() });
-      void queryClient.invalidateQueries({ queryKey: userKeys.collection() });
+      setTimeout(() => {
+        void queryClient.invalidateQueries({ queryKey: tasksKeys.details() });
+        void queryClient.invalidateQueries({ queryKey: userKeys.details() });
+        void queryClient.invalidateQueries({ queryKey: userKeys.collection() });
+      }, 2500);
+
       options?.onSuccess?.(data, variables, context);
     },
     onError: (error, variables, context) => {
