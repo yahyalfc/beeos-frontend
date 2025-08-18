@@ -159,6 +159,9 @@ export const CollectionSingleHeroContent: FC<
   const isQuesting = collectionStatus
     ? collectionStatus.statusName === PROJECT_STATUSES.QUESTING
     : false;
+  const isMinting = collectionStatus
+    ? collectionStatus.statusName === PROJECT_STATUSES.MINT
+    : false;
 
   const minterActionLabel =
     phase === PHASES.PRE_PHASE
@@ -214,7 +217,7 @@ export const CollectionSingleHeroContent: FC<
           actionName={minterActionLabel}
           currentlyMinted={nftCount}
           isEnded={isEnded}
-          isMinted={isMinted}
+          isMinted={isMinted && isMinting}
           isUpcoming={isUpcoming}
           price={nftPrice}
           totalSupply={amountNFT}
