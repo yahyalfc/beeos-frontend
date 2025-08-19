@@ -147,7 +147,7 @@ export const BeeOsMain: FC = ({}) => {
             <p ref={descriptionRef} className="w-full text-md opacity-0">
               <span className="w-full inline-block">
                 BeeOS NFTs give you exclusive access to launchpad whitelists,
-                staking rewards, and premium features of our AI assistant Marie
+                staking rewards, and premium features of our AI assistant
               </span>
             </p>
             <div

@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable sonarjs/no-nested-conditional */
 /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -42,11 +41,13 @@ interface CollectionSingleHeroContentProps {
 
 export const CollectionSingleHeroContent: FC<
   CollectionSingleHeroContentProps
-> = ({ data: { id, name, blockchain, amountNFT, description, nftPrice } }) => {
+> = ({
+  data: { id, name, blockchain, amountNFT, description, nftPrice, status, socials },
+}) => {
   const { setParams } = useSearchQuery();
   const { address, isConnected } = useAppKitAccount();
 
-  const { collectionProfile, collectionData } = useCollectionSingleContext();
+  const { collectionProfile } = useCollectionSingleContext();
 
   const {
     isMinted,
@@ -149,19 +150,11 @@ export const CollectionSingleHeroContent: FC<
     [checkStatus, setParams, collectionProfile, id]
   );
 
-  const collectionStatus = collectionData?.status ?? null;
-  const isEnded = collectionStatus
-    ? collectionStatus.statusName === PROJECT_STATUSES.FINISHED
-    : false;
-  const isUpcoming = collectionStatus
-    ? collectionStatus.statusName === PROJECT_STATUSES.UPCOMING
-    : false;
-  const isQuesting = collectionStatus
-    ? collectionStatus.statusName === PROJECT_STATUSES.QUESTING
-    : false;
-  const isMinting = collectionStatus
-    ? collectionStatus.statusName === PROJECT_STATUSES.MINT
-    : false;
+  const collectionStatus = status;
+  const isEnded = collectionStatus.statusName === PROJECT_STATUSES.FINISHED;
+  const isUpcoming = collectionStatus.statusName === PROJECT_STATUSES.UPCOMING;
+  const isQuesting = collectionStatus.statusName === PROJECT_STATUSES.QUESTING;
+  const isMinting = collectionStatus.statusName === PROJECT_STATUSES.MINT;
 
   const minterActionLabel =
     phase === PHASES.PRE_PHASE
@@ -194,6 +187,7 @@ export const CollectionSingleHeroContent: FC<
           amountNft={amountNFT}
           blockchainName={blockchain}
           collectionName={name}
+          socials={socials}
         />
 
         {/* Description */}
@@ -234,9 +228,9 @@ export const CollectionSingleHeroContent: FC<
       {phase === PHASES.PRE_PHASE || isUpcoming || isQuesting ? (
         <DefaultButton size="wide" variant="ghost">
           {isUpcoming ? "Questing" : "Mint"} Starts&nbsp;-&nbsp;
-          {(isUpcoming || isQuesting) && collectionStatus ? (
+          {(isUpcoming || isQuesting) ? (
             <span className="text-white">
-              {new Date(collectionStatus.startsAt).toLocaleDateString("en-US", {
+              {new Date(status.startsAt).toLocaleDateString("en-US", {
                 month: "numeric",
                 day: "numeric",
                 hour: "2-digit",
