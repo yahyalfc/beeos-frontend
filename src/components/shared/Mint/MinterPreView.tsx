@@ -28,6 +28,7 @@ export const MinterPreView: FC<MinterPreViewProps> = ({
           amountNft={collectionData.amountNFT}
           blockchainName={collectionData.blockchain}
           collectionName={collectionData.name}
+          socials={collectionData.socials}
         />
         {/* Description */}
         <MinterDescription text={collectionData.description} />
