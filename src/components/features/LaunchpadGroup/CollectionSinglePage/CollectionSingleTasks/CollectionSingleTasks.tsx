@@ -8,7 +8,7 @@ import { useCollectionSingleContext } from "@/components/providers/Collections.p
 import { TaskCard } from "@/components/shared/Cards/TaskCard";
 import { Skeleton } from "@/components/shared/UI/Skeleton/Skeleton";
 import { useCompleteTask } from "@/hooks/mutations/user-tasks-mutations";
-import { useTasks } from "@/hooks/queries/use-tasks";
+import { useTasks } from "@/hooks/queries/useTasks";
 import { PROJECT_STATUSES } from "@/types/collections";
 import { type Task } from "@/types/tasks";
 

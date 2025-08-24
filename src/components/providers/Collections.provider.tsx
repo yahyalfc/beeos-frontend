@@ -10,8 +10,8 @@ import React, {
 import { toast } from "sonner";
 
 import { useInitializeCollectionUser } from "@/hooks/mutations/use-user-mutations";
-import { useCollections } from "@/hooks/queries/use-collections";
-import { useCollectionsUser } from "@/hooks/queries/use-users";
+import { useCollections } from "@/hooks/queries/useCollections";
+import { useCollectionsUser } from "@/hooks/queries/useUsers";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
 import { type Collection } from "@/types/collections";
 import { type CompletedTask } from "@/types/tasks";

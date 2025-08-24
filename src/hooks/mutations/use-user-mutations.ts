@@ -19,8 +19,7 @@ import {
 } from "@/types/user";
 import { type WALLET_STATUSES } from "@/utils/constants";
 
-import { userKeys } from "../queries/use-users";
-
+import { userKeys } from "../queries/useUsers";
 
 // Type for mutation context
 interface MutationContext {

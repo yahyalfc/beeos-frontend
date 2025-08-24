@@ -11,7 +11,7 @@ import { ProfileXPInterface } from "@/components/shared/Interfaces/VectorInterfa
 import { CopyIcon } from "@/components/shared/UI/Icons/Copy.icon";
 import { OffIcon } from "@/components/shared/UI/Icons/Off.icon";
 import { copyToClipboard } from "@/helpers/copyToClipboard";
-import { useUser } from "@/hooks/queries/use-users";
+import { useUser } from "@/hooks/queries/useUsers";
 import { PROJECT_STATUSES } from "@/types/collections";
 import { QUERIES } from "@/utils/constants";
 

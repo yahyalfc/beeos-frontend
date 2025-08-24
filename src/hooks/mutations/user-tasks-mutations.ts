@@ -9,8 +9,8 @@ import { type ApiError } from "@/lib/api/client";
 import { TasksService } from "@/services/api/tasks.service";
 import { type Task } from "@/types/tasks";
 
-import { tasksKeys } from "../queries/use-tasks";
-import { userKeys } from "../queries/use-users";
+import { tasksKeys } from "../queries/useTasks";
+import { userKeys } from "../queries/useUsers";
 
 // Type for mutation context
 interface MutationContext {

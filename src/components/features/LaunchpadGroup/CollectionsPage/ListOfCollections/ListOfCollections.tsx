@@ -6,7 +6,7 @@ import { type FC } from "react";
 
 import { CollectionCard } from "@/components/shared/Cards/CollectionCard";
 import { Skeleton } from "@/components/shared/UI/Skeleton/Skeleton";
-import { useCollections } from "@/hooks/queries/use-collections";
+import { useCollections } from "@/hooks/queries/useCollections";
 import { PROJECT_STATUSES } from "@/types/collections";
 
 export const ListOfCollections: FC = ({}) => {
@@ -60,14 +60,18 @@ export const ListOfCollections: FC = ({}) => {
             {pastCollections?.length && !isLoading ? (
               <ul className="grid md:grid-cols-4 gap-5">
                 {/* sort by date */}
-                {pastCollections.toSorted(
-                  (a, b) => new Date(b.status.endsAt).getTime() - new Date(a.status.endsAt).getTime()
-                ).map((collectionData) => (
-                  <CollectionCard
-                    key={collectionData.id}
-                    data={collectionData}
-                  />
-                ))}
+                {pastCollections
+                  .toSorted(
+                    (a, b) =>
+                      new Date(b.status.endsAt).getTime() -
+                      new Date(a.status.endsAt).getTime()
+                  )
+                  .map((collectionData) => (
+                    <CollectionCard
+                      key={collectionData.id}
+                      data={collectionData}
+                    />
+                  ))}
               </ul>
             ) : !pastCollections && isLoading ? (
               <ul className="grid md:grid-cols-4 gap-5">
@@ -87,7 +91,8 @@ const ListOfCollectionsEmpty: FC = () => {
   return (
     <div className="inner-container w-full">
       <p className="text-start text-md my-16">
-        No Collections Found. There are currently <br/> no collections available.
+        No Collections Found. There are currently <br /> no collections
+        available.
       </p>
     </div>
   );

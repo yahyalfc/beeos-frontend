@@ -17,6 +17,7 @@ interface MinterPreViewProps {
 
 export const MinterPreView: FC<MinterPreViewProps> = ({
   collectionData,
+  
   currentlyMinted,
   onCheckStatus,
 }) => {
