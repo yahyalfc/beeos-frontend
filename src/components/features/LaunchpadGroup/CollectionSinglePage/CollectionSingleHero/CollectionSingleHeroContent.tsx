@@ -42,7 +42,16 @@ interface CollectionSingleHeroContentProps {
 export const CollectionSingleHeroContent: FC<
   CollectionSingleHeroContentProps
 > = ({
-  data: { id, name, blockchain, amountNFT, description, nftPrice, status, socials },
+  data: {
+    id,
+    name,
+    blockchain,
+    amountNFT,
+    description,
+    nftPrice,
+    status,
+    socials,
+  },
 }) => {
   const { setParams } = useSearchQuery();
   const { address, isConnected } = useAppKitAccount();
@@ -133,10 +142,11 @@ export const CollectionSingleHeroContent: FC<
   const handleCheckUserState = useCallback(
     async (walletAddress?: string) => {
       try {
-        if (collectionProfile || walletAddress) {
+        if (collectionProfile || (walletAddress && typeof walletAddress === "string") || address) {
+          const realAddress = walletAddress && typeof walletAddress === "string" ? walletAddress : address;
           await checkStatus({
             projectId: id,
-            walletAddress,
+            walletAddress: realAddress,
           });
           setParams(MODALS_QUERIES.CHECK_ADDRESS_MODAL, null);
           return;
@@ -147,17 +157,19 @@ export const CollectionSingleHeroContent: FC<
         toast.error("Something went wrong! Try again later =(");
       }
     },
-    [checkStatus, setParams, collectionProfile, id]
+    [checkStatus, setParams, collectionProfile, address, id]
   );
 
   const collectionStatus = status;
   const isEnded = collectionStatus.statusName === PROJECT_STATUSES.FINISHED;
   const isUpcoming = collectionStatus.statusName === PROJECT_STATUSES.UPCOMING;
   const isQuesting = collectionStatus.statusName === PROJECT_STATUSES.QUESTING;
-  const isMinting = collectionStatus.statusName === PROJECT_STATUSES.MINT;
+  const isMinting =
+    collectionStatus.statusName === PROJECT_STATUSES.MINT &&
+    Date.now() >= new Date(collectionStatus.startsAt).getTime();
 
   const minterActionLabel =
-    phase === PHASES.PRE_PHASE
+    phase === PHASES.PRE_PHASE || !isMinting
       ? "Check Wallet Status"
       : isQuesting
       ? "Join Waitlist"
@@ -191,7 +203,10 @@ export const CollectionSingleHeroContent: FC<
         />
 
         {/* Description */}
-        {phase === PHASES.PRE_PHASE || isUpcoming || isQuesting ? (
+        {phase === PHASES.PRE_PHASE ||
+        isUpcoming ||
+        isQuesting ||
+        !isMinting ? (
           <MinterDescription text={description} />
         ) : isEnded ? (
           <EndedMinterPhasesCards
@@ -218,17 +233,17 @@ export const CollectionSingleHeroContent: FC<
           onAction={
             isUpcoming || isQuesting
               ? handleJoinWhitelistClick
-              : phase === PHASES.PRE_PHASE
+              : phase === PHASES.PRE_PHASE || !isMinting
               ? handleCheckUserState
               : handleMintClick
           }
         />
         {/* )} */}
       </div>
-      {phase === PHASES.PRE_PHASE || isUpcoming || isQuesting ? (
+      {phase === PHASES.PRE_PHASE || isUpcoming || isQuesting || !isMinting ? (
         <DefaultButton size="wide" variant="ghost">
           {isUpcoming ? "Questing" : "Mint"} Starts&nbsp;-&nbsp;
-          {(isUpcoming || isQuesting) ? (
+          {isUpcoming || isQuesting || !isMinting ? (
             <span className="text-white">
               {new Date(status.startsAt).toLocaleDateString("en-US", {
                 month: "numeric",
@@ -236,6 +251,7 @@ export const CollectionSingleHeroContent: FC<
                 hour: "2-digit",
                 minute: "2-digit",
               })}
+              &nbsp;UTC
             </span>
           ) : (
             <TimerSmall

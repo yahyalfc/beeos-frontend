@@ -31,7 +31,7 @@ export const CollectionSingleTasks: FC<CollectionSingleTasksProps> = ({
     async (taskData: Task) => {
       if (completedTasks !== null && collectionData) {
         const status = collectionData.status.statusName;
-        if (status === PROJECT_STATUSES.FINISHED) {
+        if (status === PROJECT_STATUSES.FINISHED || status === PROJECT_STATUSES.MINT) {
           toast.error("Oops... The time for completing the tasks has expired");
           return;
         }
@@ -68,7 +68,7 @@ export const CollectionSingleTasks: FC<CollectionSingleTasksProps> = ({
         <div className="inner-container">
           <h2 className="title-md mb-8">
             Tasks{" "}
-            {collectionData?.status.statusName === PROJECT_STATUSES.FINISHED
+            {collectionData?.status.statusName === PROJECT_STATUSES.FINISHED || collectionData?.status.statusName === PROJECT_STATUSES.MINT
               ? "(ended)"
               : null}
           </h2>

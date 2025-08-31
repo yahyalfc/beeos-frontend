@@ -1,7 +1,8 @@
 /* eslint-disable sonarjs/no-commented-code */
 import {
   type AppKitNetwork,
-  base,
+  // base,
+  polygon,
   // baseSepolia
 } from "@reown/appkit/networks";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
@@ -27,22 +28,36 @@ if (!projectId) {
 //   },
 // };
 
-export const BASE_MAINNET_RPC_URL = "https://mainnet.base.org";
+export const POLYGON_RPC_URL = "https://polygon-rpc.com";
 
-const customBase = {
-  ...base,
+const customPolygon = {
+  ...polygon,
   rpcUrls: {
     default: {
-      http: [BASE_MAINNET_RPC_URL],
+      http: [POLYGON_RPC_URL], 
     },
     public: {
-      http: [BASE_MAINNET_RPC_URL],
+      http: [POLYGON_RPC_URL],
     },
   },
 };
 
+export const BASE_MAINNET_RPC_URL = "https://mainnet.base.org";
+
+// const customBase = {
+//   ...base,
+//   rpcUrls: {
+//     default: {
+//       http: [BASE_MAINNET_RPC_URL],
+//     },
+//     public: {
+//       http: [BASE_MAINNET_RPC_URL],
+//     },
+//   },
+// };
+
 // export const networks: AppKitNetwork[] = [customBaseSepolia];
-export const networks: AppKitNetwork[] = [customBase];
+export const networks: AppKitNetwork[] = [customPolygon];
 
 //Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({
@@ -55,7 +70,8 @@ export const wagmiAdapter = new WagmiAdapter({
   networks,
   transports: {
     // [baseSepolia.id]: http("base-sepolia-rpc.publicnode.com"),
-    [base.id]: http(BASE_MAINNET_RPC_URL),
+    // [base.id]: http(BASE_MAINNET_RPC_URL),
+    [polygon.id]: http(POLYGON_RPC_URL),
   },
 });
 

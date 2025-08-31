@@ -86,7 +86,7 @@ export const Footer: FC = () => {
   return (
     <footer
       ref={footerRef}
-      className="h-auto md:h-[100svh] relative z-[12] pt-12 md:pt-[120px] bg-background overflow-hidden"
+      className="h-auto md:h-[100svh] relative z-[12] pt-12 md:pt-[80px] bg-background overflow-hidden"
     >
       <div className="container relative z-10 md:z-[3] flex flex-col md:grid md:grid-rows-[60px_1fr_auto]">
         <div className="relative hidden md:block w-full h-10 md:h-[60px]">

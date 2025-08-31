@@ -44,6 +44,6 @@ export enum EXTERNAL_LINKS {
 
 export enum WALLET_STATUSES {
   WHITELIST = "WHITELIST",
-  GUARANTEED = "guaranteed",
+  GUARANTEED = "SALE",
   PUBLIC = "PUBLIC",
 }

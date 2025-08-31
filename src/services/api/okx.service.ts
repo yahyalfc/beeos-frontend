@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-import { okxApiClient } from "@/lib/api/okx-client";
 import { 
   type OKXCollection, 
   type OKXStats,
   OKXCollectionSchema,
-  OKXStatsSchema,
-  type OKXApiResponse 
+  OKXStatsSchema
 } from "@/types/okx";
 
 export interface OKXCollectionParams {
@@ -14,23 +11,23 @@ export interface OKXCollectionParams {
   chain?: string;
 }
 
-const COLLECTION_DETAIL_ENDPOINT = "/collection/detail";
-
 export class OKXService {
   static async getCollectionInfo(params: OKXCollectionParams): Promise<OKXCollection> {
     try {
-      const response = await okxApiClient.get<OKXApiResponse>(COLLECTION_DETAIL_ENDPOINT, {
-        params: {
-          slug: params.slug ?? params.contractAddress,
-          chain: params.chain ?? "eth",
-        },
+      const searchParams = new URLSearchParams({
+        slug: params.slug ?? params.contractAddress ?? "",
+        ...(params.chain && { chain: params.chain }),
       });
 
-      if (!response.data || response.data.length === 0) {
-        throw new Error(`Collection not found: ${params.slug ?? params.contractAddress}`);
+      const response = await fetch(`/api/okx/collection?${searchParams.toString()}`);
+      
+      if (!response.ok) {
+        const errorData = await response.json() as { error?: string };
+        throw new Error(errorData.error ?? `HTTP ${response.status}`);
       }
 
-      const validated = OKXCollectionSchema.parse(response.data[0]);
+      const data = await response.json();
+      const validated = OKXCollectionSchema.parse(data);
       return validated;
     } catch (error) {
       console.error("Error fetching OKX collection:", error);
@@ -40,18 +37,20 @@ export class OKXService {
 
   static async getCollectionStats(params: OKXCollectionParams): Promise<OKXStats> {
     try {
-      const response = await okxApiClient.get<OKXApiResponse>(COLLECTION_DETAIL_ENDPOINT, {
-        params: {
-          slug: params.slug ?? params.contractAddress,
-          chain: params.chain ?? "eth",
-        },
+      const searchParams = new URLSearchParams({
+        slug: params.slug ?? params.contractAddress ?? "",
+        ...(params.chain && { chain: params.chain }),
       });
 
-      if (!response.data || response.data.length === 0) {
-        throw new Error(`Stats not found for: ${params.slug ?? params.contractAddress}`);
+      const response = await fetch(`/api/okx/stats?${searchParams.toString()}`);
+      
+      if (!response.ok) {
+        const errorData = await response.json() as { error?: string };
+        throw new Error(errorData.error ?? `HTTP ${response.status}`);
       }
 
-      const validated = OKXStatsSchema.parse(response.data[0]);
+      const data = await response.json();
+      const validated = OKXStatsSchema.parse(data);
       return validated;
     } catch (error) {
       console.error("Error fetching OKX stats:", error);
@@ -73,18 +72,8 @@ export class OKXService {
 
   static async searchCollections(query: string, chain?: string): Promise<OKXCollection[]> {
     try {
-      const response = await okxApiClient.get<OKXApiResponse>(COLLECTION_DETAIL_ENDPOINT, {
-        params: {
-          slug: query,
-          chain: chain ?? "eth",
-        },
-      });
-
-      if (!response.data) {
-        return [];
-      }
-
-      return response.data.map(item => OKXCollectionSchema.parse(item));
+      const collections = await this.getMultipleCollections([query], chain);
+      return collections.filter(Boolean);
     } catch (error) {
       console.error("Error searching OKX collections:", error);
       return [];

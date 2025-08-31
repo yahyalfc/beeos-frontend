@@ -18,7 +18,7 @@ import MinterABI from "./GPT360Minter.json";
 import { type PropStamp } from "./useMintCountdown";
 
 export const contractAddress = "0x13Dd126f823e5A0443FFc1a194Ec903EdDC3778C";
-export const AMOUNT_NFT = 3600;
+export const AMOUNT_NFT = 4000;
 
 export enum PHASES {
   WHITELIST = "whitelist",
@@ -30,7 +30,7 @@ export enum PHASES {
 export const useMinter = () => {
   const { address, isConnected } = useAppKitAccount();
   const [isMinted, setIsMinted] = useState(false);
-  const [userPhase, setUserPhase] = useState<PHASES>(PHASES.PUBLIC);
+  const [userPhase, setUserPhase] = useState<PHASES>(PHASES.PRE_PHASE);
 
   const { writeContract, writeContractAsync } = useWriteContract();
 

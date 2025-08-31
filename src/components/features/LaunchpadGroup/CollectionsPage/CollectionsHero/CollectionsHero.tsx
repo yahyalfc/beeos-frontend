@@ -7,68 +7,18 @@ import Image from "next/image";
 import { BannerPlateInterface } from "@/components/shared/Interfaces/VectorInterfaces/BannerPlateInterface";
 import { CollectionBannerPlate } from "@/components/shared/Plates/CollectionBannerPlate";
 import { VerifiedIcon } from "@/components/shared/UI/Icons/Verified.icon";
-import { useOKXCollectionWithStats } from "@/hooks/queries/useOKXQueries";
 import { useIsMobile } from "@/hooks/useResponsible";
 import { EXTERNAL_LINKS } from "@/utils/constants";
 
 export const CollectionsHero: FC = ({}) => {
   const isMobile = useIsMobile();
 
-  const { collection, stats, isLoading, isError } = useOKXCollectionWithStats({
-    slug: "beeos",
-    chain: "eth",
-  });
-
-  const formatPrice = (price: string) => {
-    const numPrice = parseFloat(price);
-    if (numPrice === 0) return "N/A";
-    return `$${numPrice.toFixed(2)}`;
-  };
-
-  const formatVolume = (volume: string) => {
-    const numVolume = parseFloat(volume);
-    if (numVolume === 0) return "N/A";
-    if (numVolume >= 1000000) {
-      return `$${(numVolume / 1000000).toFixed(1)}M`;
-    }
-    if (numVolume >= 1000) {
-      return `$${(numVolume / 1000).toFixed(0)}K`;
-    }
-    return `$${numVolume.toFixed(0)}`;
-  };
-
-  const formatPercentage = (listed: string, total: string) => {
-    const listedNum = parseFloat(listed);
-    const totalNum = parseFloat(total);
-    if (totalNum === 0) return "N/A";
-    return `${((listedNum / totalNum) * 100).toFixed(1)}%`;
-  };
-
   const getDisplayValues = () => {
-    if (isLoading) {
-      return {
-        // eslint-disable-next-line sonarjs/no-duplicate-string
-        floorPrice: "Loading...",
-        items: "Loading...",
-        volume: "Loading...",
-        listed: "Loading...",
-      };
-    }
-
-    if (isError || !collection || !stats) {
-      return {
-        floorPrice: "$31.59",
-        items: "2548",
-        volume: "$220K",
-        listed: "4.4%",
-      };
-    }
-
     return {
-      floorPrice: formatPrice(stats.floorPrice),
-      items: collection.items || "2548",
-      volume: formatVolume(stats.volume24h),
-      listed: formatPercentage(collection.listedItems, collection.items),
+      floorPrice: "$45.73",
+      items: "2548",
+      volume: "$234K",
+      listed: "4.16%",
     };
   };
 
@@ -110,7 +60,7 @@ export const CollectionsHero: FC = ({}) => {
                   window.open(EXTERNAL_LINKS.OPENSEA, "_blank", "noreferrer");
                 }}
               >
-                {collection?.collectionName ?? "BeeOS"}
+                BeeOS
                 <span className="inline">
                   <VerifiedIcon />
                 </span>
