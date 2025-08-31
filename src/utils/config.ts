@@ -34,7 +34,7 @@ const customPolygon = {
   ...polygon,
   rpcUrls: {
     default: {
-      http: [POLYGON_RPC_URL], 
+      http: [POLYGON_RPC_URL],
     },
     public: {
       http: [POLYGON_RPC_URL],

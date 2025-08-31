@@ -40,6 +40,12 @@ export const CollectionCard: FC<CollectionCardProps> = ({
     imageUrlProper = imageUrl;
   }
 
+  const isUpcoming = statusName === PROJECT_STATUSES.UPCOMING;
+  const isFinished = statusName === PROJECT_STATUSES.FINISHED;
+  const isQuesting = statusName === PROJECT_STATUSES.QUESTING;
+  const isStatusMint = statusName === PROJECT_STATUSES.MINT;
+  const isMinting = isStatusMint && Date.now() >= new Date(startsAt).getTime();
+
   return (
     <div
       key={id}
@@ -89,26 +95,25 @@ export const CollectionCard: FC<CollectionCardProps> = ({
             <CollectionCardAboutItem
               label="Minted"
               value={
-                statusName === PROJECT_STATUSES.QUESTING ||
-                statusName === PROJECT_STATUSES.UPCOMING
+                isQuesting || isUpcoming || !isMinting
                   ? "0%"
-                  : statusName === PROJECT_STATUSES.MINT
-                  ? "In Progress"
-                  : "100%"
+                  : isFinished
+                  ? "100%"
+                  : "In Progress"
               }
             />
           </div>
         </div>
         <div className="block w-full shrink-0 flex-1">
           <DefaultButton className="w-full" variant="ghost">
-            {statusName === PROJECT_STATUSES.QUESTING ? (
+            {isQuesting ? (
               <div className="inline-flex gap-3 items-center">
                 <span className="inline-flex gap-1.5 items-center">
                   <LiveIcon />
                   <span className="text-accent">Questing Live</span>
                 </span>
               </div>
-            ) : statusName === PROJECT_STATUSES.MINT ? (
+            ) : isMinting ? (
               <div className="inline-flex gap-3 items-center">
                 <span className="inline-flex gap-1.5 items-center">
                   <LiveIcon />
@@ -116,7 +121,22 @@ export const CollectionCard: FC<CollectionCardProps> = ({
                 </span>
                 <span>Ended</span>
               </div>
-            ) : statusName === PROJECT_STATUSES.UPCOMING ? (
+            ) : isStatusMint ? (
+              <div className="inline-flex gap-3 items-center">
+                <span>
+                  <span className="text-grayish">Starts:</span>
+                  &nbsp;
+                  <span>
+                    {new Date(startsAt).toLocaleDateString("en-US", {
+                      month: "numeric",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                </span>
+              </div>
+            ) : isUpcoming ? (
               <div className="inline-flex gap-3 items-center">
                 <span>
                   <span className="text-grayish">Starts:</span>
