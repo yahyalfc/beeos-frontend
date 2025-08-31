@@ -7,6 +7,7 @@ import { type FC, useCallback, useEffect } from "react";
 
 import { useAppKitAccount } from "@reown/appkit/react";
 import { toast } from "sonner";
+import { getAddress } from "viem";
 
 import { useCollectionSingleContext } from "@/components/providers/Collections.provider";
 import { MintPlateInterface } from "@/components/shared/Interfaces/VectorInterfaces/MintPlateInterface";
@@ -142,11 +143,18 @@ export const CollectionSingleHeroContent: FC<
   const handleCheckUserState = useCallback(
     async (walletAddress?: string) => {
       try {
-        if (collectionProfile || (walletAddress && typeof walletAddress === "string") || address) {
-          const realAddress = walletAddress && typeof walletAddress === "string" ? walletAddress : address;
+        if (
+          collectionProfile ||
+          (walletAddress && typeof walletAddress === "string") ||
+          address
+        ) {
+          const realAddress =
+            walletAddress && typeof walletAddress === "string"
+              ? walletAddress
+              : address;
           await checkStatus({
             projectId: id,
-            walletAddress: realAddress,
+            walletAddress: realAddress ? getAddress(realAddress) : realAddress,
           });
           setParams(MODALS_QUERIES.CHECK_ADDRESS_MODAL, null);
           return;

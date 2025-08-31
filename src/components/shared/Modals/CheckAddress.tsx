@@ -3,6 +3,7 @@ import { type FC } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { getAddress } from "viem";
 import { z } from "zod";
 
 import { useSearchQuery } from "@/hooks/useSearchQuery";
@@ -57,7 +58,8 @@ const CheckAddressSub: FC<CheckAddressSubProps> = ({ onCheck }) => {
   if (modalQuery === "true") isOpen = true;
 
   const onSubmit = (data: AddressFormData) => {
-    onCheck(data.address);
+    const formattedAddress = getAddress(data.address.trim());
+    onCheck(formattedAddress);
     reset();
   };
 
