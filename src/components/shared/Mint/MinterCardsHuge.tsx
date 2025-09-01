@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-commented-code */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable sonarjs/no-nested-conditional */
 "use client";
@@ -56,7 +55,7 @@ export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
           <span className="text-white text-default text-sm">
             {progress}%&nbsp;
             <span className="text-regent">
-              {isEnded || isMinting
+              {isMinting
                 ? `${scaledValue}/${totalSupply}`
                 : isUpcoming
                 ? `0/${totalSupply}`
@@ -91,14 +90,14 @@ export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
           size="wide"
           variant={isMinted ? "bright" : "accent"}
           onClick={() => {
-            // window.open(
-            //   "https://opensea.io/collection/hyperboard-vip",
-            //   "_blank",
-            //   "noopener,noreferrer"
-            // );
+            window.open(
+              "https://magiceden.io/collections/polygon/0x6a5bb2f46a1170747301b3756cea5b6879344e67",
+              "_blank",
+              "noopener,noreferrer"
+            );
           }}
         >
-          Check Collection on OpenSea
+          Explore Collection
         </DefaultButton>
       ) : (
         <DefaultButton

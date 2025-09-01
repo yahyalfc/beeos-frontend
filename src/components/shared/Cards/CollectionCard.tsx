@@ -50,7 +50,7 @@ export const CollectionCard: FC<CollectionCardProps> = ({
   const isQuesting = statusName === PROJECT_STATUSES.QUESTING;
   const isStatusMint = statusName === PROJECT_STATUSES.MINT;
   const isMinting = isStatusMint && Date.now() >= utcDateMint.getTime();
-  
+
   return (
     <div
       key={id}
@@ -100,10 +100,10 @@ export const CollectionCard: FC<CollectionCardProps> = ({
             <CollectionCardAboutItem
               label="Minted"
               value={
-                isQuesting || isUpcoming || !isMinting
-                  ? "0%"
-                  : isFinished
+                isFinished
                   ? "100%"
+                  : isQuesting || isUpcoming || !isMinting
+                  ? "0%"
                   : "In Progress"
               }
             />
