@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-commented-code */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable sonarjs/no-nested-conditional */
 "use client";
@@ -13,6 +14,7 @@ interface MinterCardsHugeProps {
   totalSupply: number;
   isMinted?: boolean;
   isEnded?: boolean;
+  isMinting?: boolean;
   isUpcoming?: boolean;
   currentlyMinted: number;
   price?: string;
@@ -23,6 +25,7 @@ interface MinterCardsHugeProps {
 export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
   price = 0,
   isMinted = false,
+  isMinting = false,
   isEnded = false,
   isUpcoming = false,
   currentlyMinted,
@@ -35,7 +38,6 @@ export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
     : Math.floor((currentlyMinted / totalSupply) * 1000) / 10;
 
   const isPriceZero = price === "0";
-
   return (
     <div className="block relative p-5">
       <MintCardPlateInterface />
@@ -46,7 +48,7 @@ export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
           <span className="text-white text-default text-sm">
             {progress}%&nbsp;
             <span className="text-regent">
-              {isEnded
+              {isEnded || isMinting
                 ? `${currentlyMinted}/${totalSupply}`
                 : isUpcoming
                 ? `0/${totalSupply}`
@@ -81,14 +83,14 @@ export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
           size="wide"
           variant={isMinted ? "bright" : "accent"}
           onClick={() => {
-            window.open(
-              "https://opensea.io/collection/hyperboard-vip",
-              "_blank",
-              "noopener,noreferrer"
-            );
+            // window.open(
+            //   "https://opensea.io/collection/hyperboard-vip",
+            //   "_blank",
+            //   "noopener,noreferrer"
+            // );
           }}
         >
-          Explore Collection
+          Check Collection on OpenSea
         </DefaultButton>
       ) : (
         <DefaultButton

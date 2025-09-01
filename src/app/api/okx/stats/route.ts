@@ -45,29 +45,14 @@ class OKXBackendClient {
       "OK-ACCESS-PASSPHRASE": this.passphrase,
     };
 
-    console.log("Stats request details:", {
-      url: `https://web3.okx.com${requestPath}`,
-      method,
-      headers: {
-        ...headers,
-        "OK-ACCESS-SIGN": "[REDACTED]",
-        "OK-ACCESS-KEY": this.apiKey ? "[SET]" : "[MISSING]",
-        "OK-ACCESS-PASSPHRASE": this.passphrase ? "[SET]" : "[MISSING]"
-      },
-      timestamp,
-      prehash: timestamp + method + requestPath + body
-    });
-
     const response = await fetch(`https://web3.okx.com${requestPath}`, {
       method,
       headers,
     });
 
-    console.log("Stats response status:", response.status, response.statusText);
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.log("Stats error response:", errorText);
       throw new Error(`OKX API error: ${response.status} ${response.statusText} - ${errorText}`);
     }
 

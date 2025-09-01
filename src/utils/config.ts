@@ -1,8 +1,10 @@
 /* eslint-disable sonarjs/no-commented-code */
 import {
   type AppKitNetwork,
-  // base,
   polygon,
+  // base,
+  // polygon,
+  // polygonAmoy,
   // baseSepolia
 } from "@reown/appkit/networks";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
@@ -28,7 +30,7 @@ if (!projectId) {
 //   },
 // };
 
-export const POLYGON_RPC_URL = "https://polygon-rpc.com";
+export const POLYGON_RPC_URL = "https://polygon-bor-rpc.publicnode.com";
 
 const customPolygon = {
   ...polygon,
@@ -41,6 +43,7 @@ const customPolygon = {
     },
   },
 };
+
 
 export const BASE_MAINNET_RPC_URL = "https://mainnet.base.org";
 

@@ -170,14 +170,7 @@ export const CollectionSingleHeroContent: FC<
 
   const today = new Date();
   const utcDateMint = new Date(
-    Date.UTC(
-      today.getUTCFullYear(),
-      8,
-      1,
-      15,
-      0,
-      0
-    )
+    Date.UTC(today.getUTCFullYear(), 8, 1, 11, 0, 0)
   );
 
   const collectionStatus = status;
@@ -247,6 +240,7 @@ export const CollectionSingleHeroContent: FC<
           currentlyMinted={nftCount}
           isEnded={isEnded}
           isMinted={isMinted && isMinting}
+          isMinting={isMinting}
           isUpcoming={isUpcoming}
           price={nftPrice}
           totalSupply={amountNFT}
@@ -262,10 +256,11 @@ export const CollectionSingleHeroContent: FC<
       </div>
       {phase === PHASES.PRE_PHASE || isUpcoming || isQuesting || !isMinting ? (
         <DefaultButton size="wide" variant="ghost">
-          {isUpcoming ? "Questing" : "Mint"} Starts&nbsp;-&nbsp;
+          {isUpcoming ? "Questing" : "Mint"} {isEnded ? "Started" : "Starts"}
+          &nbsp;-&nbsp;
           {isUpcoming || isQuesting || !isMinting ? (
             <span className="text-white">
-              {new Date(status.startsAt).toLocaleString("en-US", {
+              {utcDateMint.toLocaleString("en-US", {
                 month: "numeric",
                 day: "numeric",
                 hour: "2-digit",

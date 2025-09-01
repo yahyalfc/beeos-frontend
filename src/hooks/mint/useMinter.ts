@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 
 import {
-  // baseSepolia,
-  base,
+  polygon,
 } from "@reown/appkit/networks";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { useMutation } from "@tanstack/react-query";
@@ -14,10 +13,10 @@ import { checkMerkleList, getMerkleProof } from "@/lib/api/externalApi";
 import { config } from "@/utils/config";
 import { THREES_NAMES_CHECK } from "@/utils/mint.constants";
 
-import MinterABI from "./TeaFiMinter.json";
+import MinterABI from "./TeaFiMinterProd.json";
 import { type PropStamp } from "./useMintCountdown";
 
-export const contractAddress = "0x828c3322DaF6c2e970df38b83385EA0E3Eb8ad99";
+export const contractAddress = "0xD50175Ad67a1D897F4022d25228F2053849E0d51";
 export const AMOUNT_NFT = 4000;
 
 export enum PHASES {
@@ -53,8 +52,7 @@ export const useMinter = () => {
     address: contractAddress as `0x${string}`,
     abi: MinterABI.abi,
     functionName: "supplyRemains",
-    // chainId: baseSepolia.id,
-    chainId: base.id,
+    chainId: polygon.id,
   });
 
   const {
@@ -65,8 +63,7 @@ export const useMinter = () => {
     address: contractAddress as `0x${string}`,
     abi: MinterABI.abi,
     functionName: "startGTD",
-    // chainId: baseSepolia.id,
-    chainId: base.id,
+    chainId: polygon.id,
   });
 
   const {
@@ -77,8 +74,7 @@ export const useMinter = () => {
     address: contractAddress as `0x${string}`,
     abi: MinterABI.abi,
     functionName: "startWait",
-    // chainId: baseSepolia.id,
-    chainId: base.id,
+    chainId: polygon.id,
   });
 
   const {
@@ -89,8 +85,7 @@ export const useMinter = () => {
     address: contractAddress as `0x${string}`,
     abi: MinterABI.abi,
     functionName: "startPublic",
-    // chainId: baseSepolia.id,
-    chainId: base.id,
+    chainId: polygon.id,
   });
 
   const checkUserAddress = async () => {
@@ -131,8 +126,7 @@ export const useMinter = () => {
       address: contractAddress as `0x${string}`,
       abi: MinterABI.abi,
       functionName: "supplyRemains",
-      // chainId: baseSepolia.id,
-      chainId: base.id,
+      chainId: polygon.id,
     })) as bigint;
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (res != undefined) {
@@ -146,8 +140,7 @@ export const useMinter = () => {
       address: contractAddress as `0x${string}`,
       abi: MinterABI.abi,
       functionName: "claimed",
-      // chainId: baseSepolia.id,
-      chainId: base.id,
+      chainId: polygon.id,
 
       args: [address],
     })) as bigint;
@@ -163,13 +156,12 @@ export const useMinter = () => {
       address: contractAddress as `0x${string}`,
       abi: MinterABI.abi,
       functionName: "claimed",
-      // chainId: baseSepolia.id,
-      chainId: base.id,
+      chainId: polygon.id,
 
       args: [address],
     });
 
-    return !!(res);
+    return !!res;
   };
 
   const readContractClaim = async (
@@ -225,8 +217,7 @@ export const useMinter = () => {
             abi: MinterABI.abi,
             functionName: "mintWithProof",
             args: [merkleProof.proof],
-            // chainId: baseSepolia.id,
-            chainId: base.id,
+            chainId: polygon.id,
           });
           return { success: true };
         }
@@ -248,8 +239,7 @@ export const useMinter = () => {
             abi: MinterABI.abi,
             functionName: "mintWithProof",
             args: [merkleProof.proof],
-            // chainId: baseSepolia.id,
-            chainId: base.id,
+            chainId: polygon.id,
           });
           return { success: true };
         }
@@ -258,8 +248,7 @@ export const useMinter = () => {
           address: contractAddress as `0x${string}`,
           abi: MinterABI.abi,
           functionName: "mintPublic",
-          // chainId: baseSepolia.id,
-          chainId: base.id,
+          chainId: polygon.id,
         });
         return { success: true };
       }

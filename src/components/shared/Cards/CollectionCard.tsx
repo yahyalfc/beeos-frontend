@@ -42,7 +42,7 @@ export const CollectionCard: FC<CollectionCardProps> = ({
 
   const today = new Date();
   const utcDateMint = new Date(
-    Date.UTC(today.getUTCFullYear(), 8, 1, 15, 0, 0)
+    Date.UTC(today.getUTCFullYear(), 8, 1, 11, 0, 0)
   );
 
   const isUpcoming = statusName === PROJECT_STATUSES.UPCOMING;
@@ -124,7 +124,7 @@ export const CollectionCard: FC<CollectionCardProps> = ({
                   <LiveIcon />
                   <span className="text-accent">Mint Live</span>
                 </span>
-                <span>Ended</span>
+                {/* <span>Ended</span> */}
               </div>
             ) : isStatusMint ? (
               <div className="inline-flex gap-3 items-center">
@@ -132,7 +132,7 @@ export const CollectionCard: FC<CollectionCardProps> = ({
                   <span className="text-grayish">Starts:</span>
                   &nbsp;
                   <span>
-                    {new Date(startsAt).toLocaleDateString("en-US", {
+                    {utcDateMint.toLocaleDateString("en-US", {
                       month: "numeric",
                       day: "numeric",
                       hour: "2-digit",
