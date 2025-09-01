@@ -168,13 +168,25 @@ export const CollectionSingleHeroContent: FC<
     [checkStatus, setParams, collectionProfile, address, id]
   );
 
+  const today = new Date();
+  const utcDateMint = new Date(
+    Date.UTC(
+      today.getUTCFullYear(),
+      8,
+      1,
+      15,
+      0,
+      0
+    )
+  );
+
   const collectionStatus = status;
   const isEnded = collectionStatus.statusName === PROJECT_STATUSES.FINISHED;
   const isUpcoming = collectionStatus.statusName === PROJECT_STATUSES.UPCOMING;
   const isQuesting = collectionStatus.statusName === PROJECT_STATUSES.QUESTING;
   const isMinting =
     collectionStatus.statusName === PROJECT_STATUSES.MINT &&
-    Date.now() >= new Date(collectionStatus.startsAt).getTime();
+    Date.now() >= utcDateMint.getTime();
 
   const minterActionLabel =
     phase === PHASES.PRE_PHASE || !isMinting
@@ -254,11 +266,11 @@ export const CollectionSingleHeroContent: FC<
           {isUpcoming || isQuesting || !isMinting ? (
             <span className="text-white">
               {new Date(status.startsAt).toLocaleString("en-US", {
-              month: "numeric",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              timeZone: "UTC",
+                month: "numeric",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                timeZone: "UTC",
               })}
               &nbsp;UTC
             </span>

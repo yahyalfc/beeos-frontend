@@ -40,12 +40,17 @@ export const CollectionCard: FC<CollectionCardProps> = ({
     imageUrlProper = imageUrl;
   }
 
+  const today = new Date();
+  const utcDateMint = new Date(
+    Date.UTC(today.getUTCFullYear(), 8, 1, 15, 0, 0)
+  );
+
   const isUpcoming = statusName === PROJECT_STATUSES.UPCOMING;
   const isFinished = statusName === PROJECT_STATUSES.FINISHED;
   const isQuesting = statusName === PROJECT_STATUSES.QUESTING;
   const isStatusMint = statusName === PROJECT_STATUSES.MINT;
-  const isMinting = isStatusMint && Date.now() >= new Date(startsAt).getTime();
-
+  const isMinting = isStatusMint && Date.now() >= utcDateMint.getTime();
+  
   return (
     <div
       key={id}
