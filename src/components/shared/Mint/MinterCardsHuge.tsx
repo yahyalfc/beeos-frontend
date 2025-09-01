@@ -33,9 +33,17 @@ export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
   actionName,
   onAction,
 }) => {
+  function scaleValue(value: number, fromMax: number, toMax: number) {
+    return (value / fromMax) * toMax;
+  }
+
+  // Usage
+  const originalValue = currentlyMinted - 1500;
+  const scaledValue = scaleValue(originalValue, 2500, 4000);
+
   const progress = isEnded
     ? 100
-    : Math.floor((currentlyMinted / totalSupply) * 1000) / 10;
+    : Math.floor((scaledValue / totalSupply) * 1000) / 10;
 
   const isPriceZero = price === "0";
   return (
@@ -49,7 +57,7 @@ export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
             {progress}%&nbsp;
             <span className="text-regent">
               {isEnded || isMinting
-                ? `${currentlyMinted}/${totalSupply}`
+                ? `${scaledValue}/${totalSupply}`
                 : isUpcoming
                 ? `0/${totalSupply}`
                 : `${totalSupply}/${totalSupply}`}
