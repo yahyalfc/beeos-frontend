@@ -14,10 +14,10 @@ import { checkMerkleList, getMerkleProof } from "@/lib/api/externalApi";
 import { config } from "@/utils/config";
 import { THREES_NAMES_CHECK } from "@/utils/mint.constants";
 
-import MinterABI from "./GPT360Minter.json";
+import MinterABI from "./TeaFiMinter.json";
 import { type PropStamp } from "./useMintCountdown";
 
-export const contractAddress = "0x13Dd126f823e5A0443FFc1a194Ec903EdDC3778C";
+export const contractAddress = "0x828c3322DaF6c2e970df38b83385EA0E3Eb8ad99";
 export const AMOUNT_NFT = 4000;
 
 export enum PHASES {

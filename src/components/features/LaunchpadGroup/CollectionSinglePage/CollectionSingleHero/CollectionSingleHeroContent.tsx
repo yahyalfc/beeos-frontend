@@ -253,11 +253,12 @@ export const CollectionSingleHeroContent: FC<
           {isUpcoming ? "Questing" : "Mint"} Starts&nbsp;-&nbsp;
           {isUpcoming || isQuesting || !isMinting ? (
             <span className="text-white">
-              {new Date(status.startsAt).toLocaleDateString("en-US", {
-                month: "numeric",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
+              {new Date(status.startsAt).toLocaleString("en-US", {
+              month: "numeric",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              timeZone: "UTC",
               })}
               &nbsp;UTC
             </span>
