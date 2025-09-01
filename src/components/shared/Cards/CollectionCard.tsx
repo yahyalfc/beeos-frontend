@@ -42,7 +42,7 @@ export const CollectionCard: FC<CollectionCardProps> = ({
 
   const today = new Date();
   const utcDateMint = new Date(
-    Date.UTC(today.getUTCFullYear(), 8, 1, 11, 0, 0)
+    Date.UTC(today.getUTCFullYear(), 8, 1, 15, 0, 0)
   );
 
   const isUpcoming = statusName === PROJECT_STATUSES.UPCOMING;
