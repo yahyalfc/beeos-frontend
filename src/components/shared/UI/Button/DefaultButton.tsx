@@ -33,17 +33,22 @@ const buttonVariants = cva(
   }
 );
 
+interface DefaultButtonProps
+  extends React.ComponentProps<"button">,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+  plateChildren?: React.ReactNode;
+}
+
 function DefaultButton({
   className,
   variant = "default",
   size = "default",
   children,
   asChild = false,
+  plateChildren,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-  }) {
+}: Readonly<DefaultButtonProps>) {
   const Comp = asChild ? Slot : "button";
 
   return (
@@ -55,23 +60,25 @@ function DefaultButton({
       <span className="relative inline-flex items-center z-[2]">
         {children}
       </span>
-      {variant === "ghost" && size === "default" ? (
+
+      {plateChildren ?? null}
+      {!plateChildren && variant === "ghost" && size === "default" ? (
         <ButtonMDPlateInterface />
       ) : null}
 
-      {variant === "accent" && size === "wide" ? (
+      {!plateChildren && variant === "accent" && size === "wide" ? (
         <ButtonACCENTPlateInterface />
       ) : null}
 
-      {variant === "accent" && size === "default" ? (
+      {!plateChildren && variant === "accent" && size === "default" ? (
         <ButtonACCENTDefaultPlateInterface />
       ) : null}
 
-      {variant === "ghost" && size === "wide" ? (
+      {!plateChildren && variant === "ghost" && size === "wide" ? (
         <ButtonWIDEPlateInterface />
       ) : null}
 
-      {variant === "bright" && size === "wide" ? (
+      {!plateChildren && variant === "bright" && size === "wide" ? (
         <ButtonBRIGHTTPlateInterface />
       ) : null}
     </Comp>

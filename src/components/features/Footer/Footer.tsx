@@ -134,7 +134,7 @@ export const Footer: FC = () => {
               </ul>
             </nav>
           </FooterNavBlock>
-          <div className="flex flex-col gap-12 md:gap-16 items-start">
+          <div className="flex flex-col gap-12 md:gap-12 items-start">
             <FooterNavBlock>
               <FooterNavTitle>Contact us</FooterNavTitle>
               <a className="text-huge" href="mailto:hello@beeos2548.com">
@@ -146,6 +146,23 @@ export const Footer: FC = () => {
                 <FooterNavTitle>On social</FooterNavTitle>
               </div>
               <SocialBundleLinks />
+            </FooterNavBlock>
+            <FooterNavBlock>
+              <p className="inline-flex items-start justify-start sm:justify-end gap-2.5 sm:gap-4">
+                <FooterNavTitle>Granted by</FooterNavTitle>
+                <a
+                  href="https://aws.amazon.com/startups?trk=226c32c0-f244-4651-8c93-640b501a72e4&sc_channel=ps&ef_id=Cj0KCQjwuKnGBhD5ARIsAD19RsZ_U7lk7nOtWrPTXrdFcK_b1X9yb-DmSvnl4Aikjt9I9pcnPtelo0AaAoEgEALw_wcB:G:s&s_kwcid=AL!4422!3!755443966009!p!!g!!cloud%20services%20startup!22625036347!181865800242&gad_campaignid=22625036347&gbraid=0AAAAADjHtp9gVGJox-n0QN89wbw_76cyD&gclid=Cj0KCQjwuKnGBhD5ARIsAD19RsZ_U7lk7nOtWrPTXrdFcK_b1X9yb-DmSvnl4Aikjt9I9pcnPtelo0AaAoEgEALw_wcB#benefits"
+                  rel="noreferrer"
+                >
+                  <Image
+                    alt="Aws startups logo"
+                    className="h-8 w-auto shrink-0"
+                    height={141}
+                    src="/aws_startups.png"
+                    width={538}
+                  />
+                </a>
+              </p>
             </FooterNavBlock>
             <div className="block md:hidden">
               <FooterNavDocs />
@@ -215,5 +232,5 @@ const FooterNavTitle: FC<{ children: ReactNode }> = ({ children }) => (
 );
 
 const FooterNavBlock: FC<{ children: ReactNode }> = ({ children }) => (
-  <div className="flex flex-col gap-6 md:gap-8">{children}</div>
+  <div className="flex flex-col gap-6 md:gap-6">{children}</div>
 );

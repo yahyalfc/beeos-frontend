@@ -15,10 +15,10 @@ export const CollectionsHero: FC = ({}) => {
 
   const getDisplayValues = () => {
     return {
-      floorPrice: "$45.73",
+      floorPrice: "$41.73",
       items: "2548",
       volume: "$234K",
-      listed: "4.16%",
+      listed: "3.76%",
     };
   };
 

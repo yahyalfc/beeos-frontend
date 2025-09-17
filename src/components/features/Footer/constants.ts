@@ -22,6 +22,12 @@ export const footerNavLinks: HeaderNavLinkType[] = [
     href: ROUTES.LAUNCHPAD,
   },
   {
+    id: ROUTES.STAKING,
+    title: "Staking",
+    href: ROUTES.STAKING,
+    isComingSoon: true,
+  },
+  {
     id: ROUTES.AI_ASSISTANT,
     title: "AI Assistant",
     href: ROUTES.AI_ASSISTANT,
