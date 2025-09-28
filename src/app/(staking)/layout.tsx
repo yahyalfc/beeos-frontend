@@ -5,8 +5,8 @@ import { HeaderGeneral } from "@/components/features/Header/HeaderGeneral";
 import { Toaster } from "@/components/shared/UI/Sonner/sonner";
 
 export const metadata = {
-  title: "Staking - Arena",
-  description: "Stake your NFTs and earn rewards on Arena.",
+  title: "Staking - BeeOS",
+  description: "Stake your NFTs and earn rewards on BeeOS2548.",
 };
 
 export const revalidate = 0; 
