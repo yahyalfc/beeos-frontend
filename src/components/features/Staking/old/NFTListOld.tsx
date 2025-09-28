@@ -15,7 +15,7 @@ interface NFTListProps {
 
 const NFTListOld: React.FC<NFTListProps> = ({ items, selected, onSelect, locked }) => {
     return (
-        <div className="mb-6 grid grid-cols-2 gap-6 sm:grid-cols-5">
+        <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-5">
             {items.map(item => {
                 const id = 'payload' in item ? item.payload?.tokenId : item.id
                 return (

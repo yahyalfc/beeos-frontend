@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-dead-store */
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -14,8 +13,7 @@
 import { useEffect, useState, useCallback } from "react";
 
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { erc721Abi } from "viem";
+import { erc721Abi, getAddress } from "viem";
 import {
   useAccount,
   useReadContract,
@@ -25,14 +23,20 @@ import {
 } from "wagmi";
 import { mainnet, mantaSepoliaTestnet } from "wagmi/chains";
 
+import {
+  fetchBatchNFTMetadata,
+  fetchUserNFTs,
+} from "@/app/(staking)/actions/staking.actions";
 import { useWallet } from "@/components/providers/Wallet.provider";
+import { type ProcessedNFT, NFTRarity } from "@/types/staking";
+import { STAKING_CONFIG } from "@/utils/constants";
 
 import { lockerAbi } from "./lockerAbi";
 
-// Use the API_BASE_URL as requested
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_MINT_URL ?? "";
+// Use the proper API base URL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
-// Types
+// Types (keeping the existing ones for compatibility)
 export enum NFT_RARITY {
   COMMON = "Common",
   RARE = "Rare",
@@ -46,6 +50,7 @@ export interface IArenaNFTResult {
   unlockTime?: string;
   canUnlock?: boolean;
   createdAt?: string;
+  isExternal?: boolean;
 }
 
 export interface IBeeOsResult {
@@ -55,6 +60,7 @@ export interface IBeeOsResult {
   id: string;
   image_url: string;
   token_id?: string;
+  isExternal?: boolean;
 }
 
 const NFT_RARITY_MAP = {
@@ -92,12 +98,8 @@ export const useBeeOsStakingOld = (): {
   lockedByAddress: any;
 } => {
   const isTestnet = process.env.NEXT_PUBLIC_IS_TESTNET === "true";
-  const LOCK_CONTRACT = isTestnet
-    ? "0x5027aF793b9f81aAF9A3850979Db905C1E86d2b4"
-    : "0xf4EF525f4c6e7EbaDba5E6A42B69367faA97FD75";
-  const NFT_COLLECTION = isTestnet
-    ? "0x601914abf71cbaDcDCe9A7717594DFB50ED95027"
-    : "0x5088F6c95Ee2E668907f153f709144ffc92D3abB";
+  const LOCK_CONTRACT = STAKING_CONFIG.LOCKER_CONTRACT_ADDRESS;
+  const NFT_COLLECTION = STAKING_CONFIG.NFT_CONTRACT_ADDRESS;
 
   const { address, chain } = useAccount();
   const { switchChainAsync } = useSwitchChain();
@@ -113,7 +115,7 @@ export const useBeeOsStakingOld = (): {
   const [isLoadingBeeOs, setIsLoadingBeeOs] = useState(false);
   const [days, setDays] = useState(30);
 
-  // Queries
+  // Queries - Updated to use new API endpoints
   const { data: locked } = useQuery({
     queryKey: ["locked", address],
     queryFn: async (): Promise<
@@ -121,22 +123,40 @@ export const useBeeOsStakingOld = (): {
     > => {
       if (!address) return [];
       const res = await fetch(
-        `https://arenavs.com/api/get-locked?walletAddress=${address}`
+        `${API_BASE_URL}/api/v1/nft-staking/locked?walletAddress=${getAddress(
+          address
+        )}`
       );
+      if (!res.ok) {
+        console.error("Failed to fetch locked NFTs");
+        return [];
+      }
       return res.json();
     },
     enabled: !!address,
     refetchOnWindowFocus: true,
   });
 
+  // Updated to use the new API endpoint for unlocked NFTs
   const { data: unlocked } = useQuery({
     queryKey: ["unlocked", address],
-    queryFn: async (): Promise<{ xp?: number }> => {
+    queryFn: async (): Promise<{ xp?: number; totalXp?: string }> => {
       if (!address) return {};
       const res = await fetch(
-        `https://arenavs.com/api/api/get-unlocked?walletAddress=${address}`
+        `${API_BASE_URL}/api/v1/nft-staking/unlocked?walletAddress=${getAddress(
+          address
+        )}`
       );
-      return res.json();
+      if (!res.ok) {
+        console.error("Failed to fetch unlocked NFTs");
+        return {};
+      }
+      const data = await res.json();
+      // Convert totalXp to number for compatibility
+      return {
+        xp: data.totalXp ? parseFloat(data.totalXp) : undefined,
+        totalXp: data.totalXp,
+      };
     },
     enabled: !!address,
     refetchOnWindowFocus: true,
@@ -146,7 +166,9 @@ export const useBeeOsStakingOld = (): {
     abi: lockerAbi,
     address: LOCK_CONTRACT as `0x${string}`,
     functionName: "getLocksByAddress",
-    args: address ? [NFT_COLLECTION as `0x${string}`, address] : undefined,
+    args: address
+      ? [NFT_COLLECTION as `0x${string}`, getAddress(address)]
+      : undefined,
   });
 
   // Transactions
@@ -165,7 +187,7 @@ export const useBeeOsStakingOld = (): {
       functionName: "setApprovalForAll",
       args: [LOCK_CONTRACT as `0x${string}`, true],
       chain: isTestnet ? mantaSepoliaTestnet : mainnet,
-      account: address,
+      account: getAddress(address),
     });
   }, [NFT_COLLECTION, LOCK_CONTRACT, isTestnet, address, writeContractApprove]);
 
@@ -183,7 +205,7 @@ export const useBeeOsStakingOld = (): {
         BigInt(lockTime),
       ],
       chain: isTestnet ? mantaSepoliaTestnet : mainnet,
-      account: address,
+      account: getAddress(address),
     });
   }, [
     LOCK_CONTRACT,
@@ -207,7 +229,7 @@ export const useBeeOsStakingOld = (): {
         selectedNFTsLocked.map((id) => BigInt(id)),
       ],
       chain: isTestnet ? mantaSepoliaTestnet : mainnet,
-      account: address,
+      account: getAddress(address),
     });
   }, [
     LOCK_CONTRACT,
@@ -218,7 +240,7 @@ export const useBeeOsStakingOld = (): {
     writeContractUnlock,
   ]);
 
-  // Get NFT list
+  // Get NFT list - Updated to use Alchemy API
   const getNFTList = useCallback(
     async (userAddress?: string): Promise<void> => {
       if (!userAddress) {
@@ -227,62 +249,43 @@ export const useBeeOsStakingOld = (): {
       }
       setIsLoadingBeeOs(true);
       try {
-        const myNFTs = await axios.get<{ result: { token_id: string }[] }>(
-          `https://arenavs.com/api/get-beeos-nft?walletAddress=${userAddress}`
-        );
-        const resultsBeeOs = myNFTs.data.result || [];
-        let readyArenaReq = false;
-        let offset = 0;
-        const resultsArena: IArenaNFTResult[] = [];
+        // Use the Alchemy service to fetch NFTs
+        const { nfts } = await fetchUserNFTs(userAddress);
 
-        // Create axios instance for Arena API
-        const arenaApi = axios.create({
-          baseURL: process.env.NEXT_PUBLIC_API_URL || "",
-        });
+        // Convert ProcessedNFT to IBeeOsResult format for compatibility
+        const convertedResults: IBeeOsResult[] = nfts.map(
+          (nft: ProcessedNFT) => {
+            // Map NFTRarity enum to NFT_RARITY enum
+            const rarityMap: Record<NFTRarity, NFT_RARITY> = {
+              [NFTRarity.COMMON]: NFT_RARITY.COMMON,
+              [NFTRarity.RARE]: NFT_RARITY.RARE,
+              [NFTRarity.LEGENDARY]: NFT_RARITY.LEGENDARY,
+              [NFTRarity.MYTHIC]: NFT_RARITY.MYTHIC,
+            };
 
-        while (!readyArenaReq && resultsBeeOs.length > 0) {
-          const tokenIds = resultsBeeOs
-            .slice(offset, offset + 50)
-            .map((item) => item.token_id)
-            .join(",");
-
-          if (!tokenIds) {
-            readyArenaReq = true;
-            break;
+            return {
+              id: nft.tokenId,
+              token_id: nft.tokenId,
+              image_url: nft.image,
+              animation_url: null,
+              external_app_url: null,
+              arenaData: {
+                payload: {
+                  name: nft.name,
+                  logo: nft.image,
+                  tokenId: nft.tokenId,
+                },
+                traits: [
+                  {
+                    value: rarityMap[nft.rarity],
+                  },
+                ],
+              },
+            };
           }
-
-          const res = await arenaApi.get<{
-            hasNextPage?: boolean;
-            docs: IArenaNFTResult[];
-          }>("/marketplace/token/collection-address", {
-            params: {
-              limit: 50,
-              offset,
-              tokenIds,
-              collectionAddress: NFT_COLLECTION,
-            },
-          });
-
-          resultsArena.push(...(res.data.docs || []));
-          if (!res.data.hasNextPage || offset >= resultsBeeOs.length) {
-            readyArenaReq = true;
-          }
-          offset += 50;
-        }
-
-        setBeeOsResults(
-          resultsBeeOs.map((item) => ({
-            ...item,
-            image_url: "",
-            token_id: item.token_id,
-            id: item.token_id,
-            arenaData: resultsArena.find(
-              (arena) =>
-                arena?.payload?.tokenId?.toString() ===
-                item.token_id?.toString()
-            ),
-          }))
         );
+
+        setBeeOsResults(convertedResults);
       } catch (error) {
         console.error("Error fetching NFTs:", error);
         setBeeOsResults([]);
@@ -293,122 +296,105 @@ export const useBeeOsStakingOld = (): {
     [NFT_COLLECTION]
   );
 
-  // Get locked NFTs
   const getLockedNFTs = useCallback(async (): Promise<void> => {
     const resultsLocked: IArenaNFTResult[] = [];
-    let readyLocked = false;
-    let offset = 0;
-    const lockedTokenIds = Array.from(
-      new Set(locked?.map((item) => item.nftIds).flat() || [])
-    );
+    const lockedNftId = locked?.flatMap((item) => item.nftIds) || [];
     const tokenItemsWithTime = (lockedByAddress?.data as any[])
       ?.filter((item) => item?.isLocked)
-      ?.map((item: any, index: number) => ({
-        tokenId: lockedTokenIds[index],
+      ?.map((item: any) => ({
+        tokenId: `${item.tokenId}`.replace(/n/g, ""),
         unlockTime: item.unlockTime,
       }));
 
     if (address && tokenItemsWithTime && tokenItemsWithTime.length > 0) {
-      // Create axios instance for Arena API
-      const arenaApi = axios.create({
-        baseURL: process.env.NEXT_PUBLIC_API_URL || "",
-      });
+      try {
+        const tokenIds = tokenItemsWithTime.map((item: any) => item.tokenId);
+        const { nfts } = await fetchBatchNFTMetadata(tokenIds);
 
-      while (!readyLocked) {
-        const tokenIdsToFetch = tokenItemsWithTime
-          .slice(offset, offset + 50)
-          .map((item: any) => item.tokenId)
-          .join(",");
+        nfts.forEach((nft: ProcessedNFT) => {
+          const tokenItem = tokenItemsWithTime.find(
+            (item: any) => item.tokenId === nft.tokenId
+          );
 
-        if (!tokenIdsToFetch) {
-          readyLocked = true;
-          break;
-        }
+          const isExternalNft = lockedNftId.some(
+            (id) => id !== tokenItem?.tokenId
+          );
 
-        const res = await arenaApi.get<{
-          hasNextPage?: boolean;
-          docs: IArenaNFTResult[];
-        }>("/marketplace/token/collection-address", {
-          params: {
-            limit: 50,
-            offset,
-            tokenIds: tokenIdsToFetch,
-            collectionAddress: NFT_COLLECTION,
-          },
+          const rarityMap: Record<NFTRarity, NFT_RARITY> = {
+            [NFTRarity.COMMON]: NFT_RARITY.COMMON,
+            [NFTRarity.RARE]: NFT_RARITY.RARE,
+            [NFTRarity.LEGENDARY]: NFT_RARITY.LEGENDARY,
+            [NFTRarity.MYTHIC]: NFT_RARITY.MYTHIC,
+          };
+
+          resultsLocked.push({
+            payload: {
+              name: nft.name,
+              logo: nft.image,
+              tokenId: nft.tokenId,
+            },
+            traits: [
+              {
+                value: rarityMap[nft.rarity],
+              },
+            ],
+            createdAt: locked?.find((lockedItem: any) =>
+              lockedItem.nftIds.includes(nft.tokenId)
+            )?.createdAt,
+            unlockTime: tokenItem?.unlockTime?.toString(),
+            canUnlock: isExternalNft
+              ? true
+              : tokenItem?.unlockTime &&
+                new Date().getTime() >
+                  new Date(Number(tokenItem.unlockTime) * 1000).getTime(),
+          });
         });
 
-        resultsLocked.push(
-          ...(res.data.docs || []).map((item: any) => ({
-            ...item,
-            createdAt: locked?.find((lockedItem: any) =>
-              lockedItem.nftIds.includes(item.payload.tokenId.toString())
-            )?.createdAt,
-            unlockTime: tokenItemsWithTime
-              .find(
-                (token: any) =>
-                  token.tokenId.toString() === item.payload.tokenId.toString()
-              )
-              ?.unlockTime.toString(),
-            canUnlock:
-              new Date().getTime() >
-              new Date(
-                Number(
-                  tokenItemsWithTime
-                    .find(
-                      (token: any) =>
-                        token.tokenId.toString() ===
-                        item.payload.tokenId.toString()
-                    )
-                    ?.unlockTime.toString()
-                ) * 1000
-              ).getTime(),
-          }))
-        );
-        if (!res.data.hasNextPage || offset >= tokenItemsWithTime.length) {
-          readyLocked = true;
-        }
-        offset += 50;
+        setBeeOsResultsLocked(resultsLocked);
+      } catch (error) {
+        console.error("Error fetching locked NFT metadata:", error);
+        setBeeOsResultsLocked([]);
       }
-      setBeeOsResultsLocked(resultsLocked);
     }
   }, [lockedByAddress?.data, locked, address, NFT_COLLECTION]);
 
-  // XP and rewards
+  // XP and rewards calculations
   const rewardedNft =
     (beeOsResultsLocked &&
       beeOsResultsLocked
-        ?.map(
-          (item: any) => {
-            const rarity = (item.traits?.[0]?.value || NFT_RARITY.COMMON) as NFT_RARITY;
-            const rarityValue = NFT_RARITY_MAP[rarity] ?? NFT_RARITY_MAP[NFT_RARITY.COMMON];
-            return (rarityValue *
+        ?.map((item: any) => {
+          const rarity = (item.traits?.[0]?.value ||
+            NFT_RARITY.COMMON) as NFT_RARITY;
+          const rarityValue =
+            NFT_RARITY_MAP[rarity] ?? NFT_RARITY_MAP[NFT_RARITY.COMMON];
+       
+          return (
+            (rarityValue *
               (new Date().getTime() -
                 new Date(item.createdAt || "").getTime())) /
-            (1000 * 60 * 60 * 24);
-          }
-        )
+            (1000 * 60 * 60 * 24)
+          );
+        })?.filter((val: number) => val)
         ?.reduce((acc: number, curr: number) => acc + curr, 0)) ||
     0;
+
   const youWillGetXp =
     selectedNFTs
       ?.map((item: any) => {
-        const rarity = (item?.arenaData?.traits?.[0]?.value || NFT_RARITY.COMMON) as NFT_RARITY;
+        const rarity = (item?.arenaData?.traits?.[0]?.value ||
+          NFT_RARITY.COMMON) as NFT_RARITY;
         return NFT_RARITY_MAP[rarity] ?? NFT_RARITY_MAP[NFT_RARITY.COMMON];
       })
-      .reduce(
-        (acc: number, curr: number) => acc + curr,
-        0
-      ) * days || 0;
+      .reduce((acc: number, curr: number) => acc + curr, 0) * days || 0;
+
   const youWillGetPerDay =
     beeOsResultsLocked
       ?.map((item: any) => {
-        const rarity = (item?.traits?.[0]?.value || NFT_RARITY.COMMON) as NFT_RARITY;
+        const rarity = (item?.traits?.[0]?.value ||
+          NFT_RARITY.COMMON) as NFT_RARITY;
         return NFT_RARITY_MAP[rarity] ?? NFT_RARITY_MAP[NFT_RARITY.COMMON];
       })
-      .reduce(
-        (acc: number, curr: number) => acc + curr,
-        0
-      ) || 0;
+      .reduce((acc: number, curr: number) => acc + curr, 0) || 0;
 
   // Chain switching and initialization
   const isCorrectChain =
@@ -457,17 +443,25 @@ export const useBeeOsStakingOld = (): {
     }
   }, [lockedByAddress?.data, locked]);
 
-  // After stake
+  // After stake - Updated to use new API endpoint
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash });
 
   useEffect(() => {
     if (isSuccess && hash && days > 0) {
-      void fetch(`${API_BASE_URL}/lock-beeos`, {
+      const lockTimeTimestamp = Math.floor(Date.now() / 1000) + lockTime;
+      void fetch(`${API_BASE_URL}/api/v1/nft-staking/lock`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ hash, lockTime }),
-      }).then(() => {
-        window.location.reload();
+        body: JSON.stringify({
+          hash,
+          lockTime: lockTimeTimestamp,
+        }),
+      }).then((res) => {
+        if (res.ok) {
+          window.location.reload();
+        } else {
+          console.error("Failed to record lock transaction");
+        }
       });
     }
   }, [isSuccess, hash, days, lockTime]);
@@ -476,18 +470,22 @@ export const useBeeOsStakingOld = (): {
   const { isLoading: isLoadingApprove, isSuccess: isSuccessApprove } =
     useWaitForTransactionReceipt({ hash: hashApprove });
 
-  // After unstake
+  // After unstake - Updated to use new API endpoint
   const { isLoading: isLoadingUnlock, isSuccess: isSuccessUnlock } =
     useWaitForTransactionReceipt({ hash: hashUnlock });
 
   useEffect(() => {
     if (isSuccessUnlock && hashUnlock) {
-      void fetch(`${API_BASE_URL}/unlock-beeos`, {
+      void fetch(`${API_BASE_URL}/api/v1/nft-staking/unlock`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ hash: hashUnlock }),
-      }).then(() => {
-        window.location.reload();
+      }).then((res) => {
+        if (res.ok) {
+          window.location.reload();
+        } else {
+          console.error("Failed to record unlock transaction");
+        }
       });
     }
   }, [hashUnlock, isSuccessUnlock]);

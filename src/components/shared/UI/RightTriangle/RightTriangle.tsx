@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
+import { cn } from "@/lib/utils";
+
 type CornerPosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
 interface RightTriangleProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -58,7 +60,9 @@ export const RightTriangle: React.FC<RightTriangleProps> = ({
         parseFloat(vwValue.replace("vw", "")) * (currentViewportWidth / 100)
       );
     }
-    return typeof vwValue === "number" ? vwValue : parseFloat(vwValue.toString()) || 200;
+    return typeof vwValue === "number"
+      ? vwValue
+      : parseFloat(vwValue.toString()) || 200;
   };
 
   const numericWidth: number = getNumericValue(width);
@@ -100,7 +104,7 @@ export const RightTriangle: React.FC<RightTriangleProps> = ({
 
   return (
     <div
-      className={`absolute top-0 left-0 inline-block ${className}`}
+      className={cn("absolute top-0 left-0 inline-block", className)}
       style={style}
       {...props}
     >
@@ -118,7 +122,7 @@ export const RightTriangle: React.FC<RightTriangleProps> = ({
             points={getTrianglePoints()}
           />
         )}
-        
+
         {/* Hypotenuse line - always rendered */}
         <line
           className="transition-all duration-300 hover:stroke-opacity-80"

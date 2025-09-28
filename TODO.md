@@ -1,39 +1,26 @@
-# TODO: Implement Old Staking System
+# TODO: Fix useBeeOsStakingOld.ts Implementation
 
-## ✅ Completed
-- [x] Create TODO.md file to track progress
+## Tasks to Complete
 
-## 🔄 In Progress
-- [ ] Phase 1: Core Hook Migration
-  - [ ] Create `useBeeOsStakingOld.ts` hook
-  - [ ] Update imports from ConnectKit to AppKit/Wagmi
-  - [ ] Adapt API calls to current project structure
-  - [ ] Update chain configuration
+- [x] Analyze current implementation issues
+- [x] Review API documentation and existing services
+- [x] Update useBeeOsStakingOld.ts to use Alchemy API service
+  - [x] Replace marketplace API calls with Alchemy service
+  - [x] Update lock/unlock API endpoints to new NestJS endpoints
+  - [x] Use proper API base URL configuration
+  - [x] Import necessary types and services
+  - [x] Fix NFT metadata fetching logic
+- [ ] Test the implementation
+- [ ] Verify all endpoints work correctly
 
-## 📋 Pending
+## Changes Made
 
-### Phase 2: Component Migration
-- [ ] Create StakingPageOld.tsx (preserve new as StakingPage.tsx)
-- [ ] Create NFTListOld.tsx component
-- [ ] Create NFTCardOld.tsx component  
-- [ ] Create StakeModalOld.tsx component
-- [ ] Create CollectionStatsOld.tsx component
-- [ ] Create StakingStatsOld.tsx component
-
-### Phase 3: Integration
-- [ ] Update imports to use existing wallet provider
-- [ ] Integrate with existing UI components
-- [ ] Update styling to match current design system
-- [ ] Connect to existing API client
-
-### Phase 4: Testing & Cleanup
-- [ ] Test wallet connection flow
-- [ ] Test staking/unstaking functionality
-- [ ] Verify XP calculations
-- [ ] Clean up any errors
-
-## 📝 Notes
-- Preserving new implementation files without "Old" suffix
-- Old implementation files will have "Old" suffix
-- Using AppKit instead of ConnectKit for wallet connection
-- Integrating with existing Wallet.provider.tsx and Wagmi.provider.tsx
+### useBeeOsStakingOld.ts
+- Replacing `/marketplace/token/` endpoints with Alchemy API service
+- Updating API endpoints from old to new:
+  - `/api/lock-beeos` → `/nft-staking/lock`
+  - `/api/unlock-beeos` → `/nft-staking/unlock`
+  - `/api/get-locked` → proper backend endpoint
+  - `/api/get-unlocked` → `/nft-staking/unlocked`
+- Using AlchemyService for NFT metadata fetching
+- Proper error handling and type safety

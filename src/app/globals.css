@@ -27,6 +27,7 @@
   --color-sky: var(--sky);
   --color-loader-bg: var(--loader-bg);
   --color-regent: var(--regent);
+  --color-accent-background: var(--accent-background);
   --color-nero: var(--nero);
   --color-pagani: var(--pagani);
   --color-grayish: var(--grayish);
@@ -51,6 +52,7 @@
   --accent: rgb(30, 219, 255);
   --skyblue: rgba(81, 227, 255, 1);
   --accent-foreground: oklch(0.21 0.034 264.665);
+  --accent-background: rgba(23, 37, 45, 1);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.928 0.006 264.531);
   --input: oklch(0.928 0.006 264.531);

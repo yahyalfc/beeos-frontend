@@ -38,13 +38,13 @@ const NFTCardOld: React.FC<NFTCardProps> = ({
   const getRarityColor = (rarity: NFT_RARITY) => {
     switch (rarity) {
       case NFT_RARITY.MYTHIC:
-        return "border-purple-500 bg-purple-500/10";
+        return "border-purple-500";
       case NFT_RARITY.LEGENDARY:
-        return "border-yellow-500 bg-yellow-500/10";
+        return "border-yellow-500 ";
       case NFT_RARITY.RARE:
-        return "border-blue-500 bg-blue-500/10";
+        return "border-blue-500 ";
       default:
-        return "border-gray-600 bg-gray-800/50";
+        return "border-gray-600";
     }
   };
 
@@ -70,27 +70,12 @@ const NFTCardOld: React.FC<NFTCardProps> = ({
   const canUnlock = isLockedItem && item.canUnlock;
   const unlockTime = isLockedItem && item.unlockTime;
 
-  const formatUnlockTime = (unlockTime: string | undefined) => {
-    if (!unlockTime) return "";
-    const date = new Date(unlockTime);
-    const now = new Date();
-
-    if (date < now) return "Ready to unlock";
-
-    const diff = date.getTime() - now.getTime();
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-    if (days > 0) return `${days}d ${hours}h`;
-    return `${hours}h`;
-  };
-
   return (
     <div
       className={cn(
         "relative cursor-pointer rounded-xl border-2 p-2 transition-all duration-200",
         getRarityColor(rarity),
-        selected && "ring-2 ring-green-500 ring-offset-2 ring-offset-black",
+        selected && "ring-2 ring-accent ring-offset-2 ring-offset-black",
         disabled && "cursor-not-allowed opacity-50",
         !disabled && "hover:scale-105"
       )}
@@ -98,7 +83,7 @@ const NFTCardOld: React.FC<NFTCardProps> = ({
     >
       {/* Selection indicator */}
       {selected && (
-        <div className="absolute -top-2 -right-2 z-10 h-6 w-6 rounded-full bg-green-500 flex items-center justify-center">
+        <div className="absolute -top-2 -right-2 z-10 h-6 w-6 rounded-full bg-accent flex items-center justify-center">
           <svg
             className="w-4 h-4 text-white"
             fill="currentColor"
@@ -116,7 +101,7 @@ const NFTCardOld: React.FC<NFTCardProps> = ({
       {/* Lock indicator for staked NFTs */}
       {locked && !canUnlock && (
         <div className="absolute top-2 right-2 z-10">
-          <div className="bg-red-500/80 rounded-full p-1">
+          <div className="bg-red-800/80 rounded-full p-1">
             <svg
               className="w-4 h-4 text-white"
               fill="none"
@@ -137,7 +122,7 @@ const NFTCardOld: React.FC<NFTCardProps> = ({
       {/* Ready to unlock indicator */}
       {locked && canUnlock && (
         <div className="absolute top-2 right-2 z-10">
-          <div className="bg-green-500/80 rounded-full p-1">
+          <div className="bg-accent rounded-full p-1">
             <svg
               className="w-4 h-4 text-white"
               fill="none"
@@ -173,16 +158,33 @@ const NFTCardOld: React.FC<NFTCardProps> = ({
       </div>
 
       {/* NFT Info */}
-      <div className="mt-2 space-y-1">
-        <p className="text-xs font-medium text-white truncate">{name}</p>
-        <p className={cn("text-xs font-semibold", getRarityTextColor(rarity))}>
-          {rarity}
-        </p>
-        {locked && unlockTime && (
-          <p className="text-xs text-gray-400">
-            {formatUnlockTime(unlockTime)}
+      <div className="mt-3 p-1">
+        <div className="flex justify-between items-start">
+          <p className="text-white text-lg block font-medium truncate mb-1">
+            {name}
           </p>
-        )}
+          <p
+            className={cn(
+              "text-white text-base block font-medium mb-1",
+              getRarityTextColor(rarity)
+            )}
+          >
+            {rarity}
+          </p>
+        </div>
+
+        {locked && unlockTime ? (
+          <p className="text-xs text-gray-400">
+            Locked until{" "}
+            {new Date(Number(`${unlockTime}000`)).toLocaleString("en-US", {
+              month: "numeric",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              timeZone: "UTC",
+            })}
+          </p>
+        ) : null}
       </div>
     </div>
   );
