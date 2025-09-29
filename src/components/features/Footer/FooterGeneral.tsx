@@ -35,50 +35,44 @@ export const FooterGeneral: FC = ({}) => {
   const logoImageRef = useRef<HTMLImageElement>(null);
   const logoCirclesRef = useRef<HTMLImageElement>(null);
 
-  useGSAP(
-    () => {
-      if (
-        !footerRef.current ||
-        !logoImageRef.current ||
-        !logoCirclesRef.current
-      )
-        return;
+  useGSAP(() => {
+    if (!footerRef.current || !logoImageRef.current || !logoCirclesRef.current)
+      return;
 
-      gsap.set(logoImageRef.current, {
-        opacity: 0,
-        y: logoConfig.logoInitialY,
-      });
+    gsap.set(logoImageRef.current, {
+      opacity: 0,
+      y: logoConfig.logoInitialY,
+    });
 
-      gsap.set(logoCirclesRef.current, {
-        opacity: 0,
-        y: logoConfig.circlesinitialY,
-      });
+    gsap.set(logoCirclesRef.current, {
+      opacity: 0,
+      y: logoConfig.circlesinitialY,
+    });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: `top 15%`,
-          end: `bottom 15%`,
-        },
-      });
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: footerRef.current,
+        start: `top 15%`,
+        end: `bottom 15%`,
+      },
+    });
 
-      tl.to(logoCirclesRef.current, {
+    tl.to(logoCirclesRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: logoConfig.animationDuration * 1.2,
+      ease: "sine.out",
+    }).to(
+      logoImageRef.current,
+      {
         opacity: 1,
         y: 0,
-        duration: logoConfig.animationDuration * 1.2,
+        duration: logoConfig.animationDuration,
         ease: "sine.out",
-      }).to(
-        logoImageRef.current,
-        {
-          opacity: 1,
-          y: 0,
-          duration: logoConfig.animationDuration,
-          ease: "sine.out",
-        },
-        `-=${logoConfig.animationDuration * 0.8}`
-      );
-    },
-  );
+      },
+      `-=${logoConfig.animationDuration * 0.8}`
+    );
+  });
 
   return (
     <footer
@@ -123,7 +117,7 @@ export const FooterGeneral: FC = ({}) => {
               </ul>
             </nav>
           </FooterNavBlock>
-          <div className="flex flex-col gap-12 md:gap-16 items-start">
+          <div className="flex flex-col gap-12 md:gap-12 items-start">
             <FooterNavBlock>
               <FooterNavTitle>Contact us</FooterNavTitle>
               <a className="text-huge" href="mailto:hello@beeos2548.com">
@@ -135,6 +129,23 @@ export const FooterGeneral: FC = ({}) => {
                 <FooterNavTitle>On social</FooterNavTitle>
               </div>
               <SocialBundleLinks />
+            </FooterNavBlock>
+            <FooterNavBlock>
+              <p className="inline-flex items-start justify-start sm:justify-end gap-2.5 sm:gap-4">
+                <FooterNavTitle>Granted by</FooterNavTitle>
+                <a
+                  href="https://aws.amazon.com/startups?trk=226c32c0-f244-4651-8c93-640b501a72e4&sc_channel=ps&ef_id=Cj0KCQjwuKnGBhD5ARIsAD19RsZ_U7lk7nOtWrPTXrdFcK_b1X9yb-DmSvnl4Aikjt9I9pcnPtelo0AaAoEgEALw_wcB:G:s&s_kwcid=AL!4422!3!755443966009!p!!g!!cloud%20services%20startup!22625036347!181865800242&gad_campaignid=22625036347&gbraid=0AAAAADjHtp9gVGJox-n0QN89wbw_76cyD&gclid=Cj0KCQjwuKnGBhD5ARIsAD19RsZ_U7lk7nOtWrPTXrdFcK_b1X9yb-DmSvnl4Aikjt9I9pcnPtelo0AaAoEgEALw_wcB#benefits"
+                  rel="noreferrer"
+                >
+                  <Image
+                    alt="Aws startups logo"
+                    className="h-8 w-auto shrink-0"
+                    height={141}
+                    src="/aws_startups.png"
+                    width={538}
+                  />
+                </a>
+              </p>
             </FooterNavBlock>
             <div className="block md:hidden">
               <FooterNavDocs />
