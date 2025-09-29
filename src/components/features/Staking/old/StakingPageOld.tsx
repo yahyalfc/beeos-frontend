@@ -64,7 +64,7 @@ const StakingPageOld: React.FC = () => {
   }
 
   return (
-    <div className="container min-h-screen block mt-28">
+    <div className="container min-h-screen block mt-28 max-w-[100vw] overflow-hidden">
       <div className="inner-container">
         <StakeModalOld
           approveAllNft={approveAllNft}
@@ -155,7 +155,7 @@ const StakingPageOld: React.FC = () => {
             <div className="flex flex-col gap-4 sm:flex-row sm:gap-0 justify-between items-start mb-8">
               <div className="title-small">Your NFTs</div>
 
-              <div className="flex gap-2.5 flew-wrap relative">
+              <div className="flex gap-2.5 flew-wrap relative max-w-screen">
                 <button
                   className="px-4 py-2 bg-accent-background relative text-accent rounded-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground "
                   onClick={() => setSelectedNFTs([])}
@@ -209,7 +209,7 @@ const StakingPageOld: React.FC = () => {
             <div className="flex flex-col gap-4 sm:flex-row sm:gap-0 justify-between items-start mb-8">
               <div className="title-small">Staked NFTs</div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap max-w-screen gap-3">
                 <button
                   className="px-4 py-2 bg-accent-background relative text-accent rounded-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground "
                   onClick={() => setSelectedNFTsLocked([])}

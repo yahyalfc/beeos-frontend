@@ -28,7 +28,8 @@ import {
   fetchUserNFTs,
 } from "@/app/(staking)/actions/staking.actions";
 import { useWallet } from "@/components/providers/Wallet.provider";
-import { type ProcessedNFT, NFTRarity } from "@/types/staking";
+import { type ProcessedNFT } from "@/types/staking";
+import { getRarityRank } from "@/utils/beeOsRarity.constants";
 import { STAKING_CONFIG } from "@/utils/constants";
 
 import { lockerAbi } from "./lockerAbi";
@@ -240,7 +241,6 @@ export const useBeeOsStakingOld = (): {
     writeContractUnlock,
   ]);
 
-  // Get NFT list - Updated to use Alchemy API
   const getNFTList = useCallback(
     async (userAddress?: string): Promise<void> => {
       if (!userAddress) {
@@ -249,19 +249,13 @@ export const useBeeOsStakingOld = (): {
       }
       setIsLoadingBeeOs(true);
       try {
-        // Use the Alchemy service to fetch NFTs
         const { nfts } = await fetchUserNFTs(userAddress);
 
-        // Convert ProcessedNFT to IBeeOsResult format for compatibility
         const convertedResults: IBeeOsResult[] = nfts.map(
           (nft: ProcessedNFT) => {
-            // Map NFTRarity enum to NFT_RARITY enum
-            const rarityMap: Record<NFTRarity, NFT_RARITY> = {
-              [NFTRarity.COMMON]: NFT_RARITY.COMMON,
-              [NFTRarity.RARE]: NFT_RARITY.RARE,
-              [NFTRarity.LEGENDARY]: NFT_RARITY.LEGENDARY,
-              [NFTRarity.MYTHIC]: NFT_RARITY.MYTHIC,
-            };
+            const localRarity = getRarityRank(nft.tokenId);
+            const finalRarity =
+              localRarity;
 
             return {
               id: nft.tokenId,
@@ -277,7 +271,7 @@ export const useBeeOsStakingOld = (): {
                 },
                 traits: [
                   {
-                    value: rarityMap[nft.rarity],
+                    value: finalRarity,
                   },
                 ],
               },
@@ -320,12 +314,10 @@ export const useBeeOsStakingOld = (): {
             (id) => id !== tokenItem?.tokenId
           );
 
-          const rarityMap: Record<NFTRarity, NFT_RARITY> = {
-            [NFTRarity.COMMON]: NFT_RARITY.COMMON,
-            [NFTRarity.RARE]: NFT_RARITY.RARE,
-            [NFTRarity.LEGENDARY]: NFT_RARITY.LEGENDARY,
-            [NFTRarity.MYTHIC]: NFT_RARITY.MYTHIC,
-          };
+          const localRarity = getRarityRank(nft.tokenId);
+
+          const finalRarity =
+            localRarity;
 
           resultsLocked.push({
             payload: {
@@ -335,7 +327,7 @@ export const useBeeOsStakingOld = (): {
             },
             traits: [
               {
-                value: rarityMap[nft.rarity],
+                value: finalRarity,
               },
             ],
             createdAt: locked?.find((lockedItem: any) =>
@@ -367,14 +359,15 @@ export const useBeeOsStakingOld = (): {
             NFT_RARITY.COMMON) as NFT_RARITY;
           const rarityValue =
             NFT_RARITY_MAP[rarity] ?? NFT_RARITY_MAP[NFT_RARITY.COMMON];
-       
+
           return (
             (rarityValue *
               (new Date().getTime() -
                 new Date(item.createdAt || "").getTime())) /
             (1000 * 60 * 60 * 24)
           );
-        })?.filter((val: number) => val)
+        })
+        ?.filter((val: number) => val)
         ?.reduce((acc: number, curr: number) => acc + curr, 0)) ||
     0;
 
@@ -436,6 +429,7 @@ export const useBeeOsStakingOld = (): {
       void lockedByAddress.refetch();
     }
   }, [locked, address]);
+
 
   useEffect(() => {
     if (locked && locked?.length > 0 && lockedByAddress?.data) {
