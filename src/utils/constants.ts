@@ -34,8 +34,8 @@ export enum SOCIAL_MEDIA {
 
 export enum SOCIAL_MEDIA_LINKS {
   DISCORD = "https://discord.com/invite/FxVyTPtF7f",
-  TELEGRAM = "https://x.com/beeos_arenavs",
-  X = "https://twitter.com/arenaweb3?s=21&t=eJC2rnI1Ww1E49kSqeWi0g",
+  TELEGRAM = "https://tg.me/beeos_arenavs",
+  X = "https://x.com/beeos_arenavs",
 }
 
 export enum EXTERNAL_LINKS {
