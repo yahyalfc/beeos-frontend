@@ -169,7 +169,7 @@ const StakingPageOld: React.FC = () => {
                   Select&nbsp;All
                 </button>
                 <button
-                  className="px-4 py-2 bg-accent-background relative text-accent rounded-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground "
+                  className="px-4 py-2 bg-accent relative text-black rounded-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground "
                   onClick={() => setIsOpenStakeModal(true)}
                 >
                   Stake&nbsp;Selected&nbsp;({selectedNFTs.length})

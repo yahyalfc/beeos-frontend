@@ -143,7 +143,7 @@ const StakeModalOld: React.FC<StakeModalProps> = ({
             <div className="space-y-3">
               {!isSuccessApprove && (
                 <DefaultButton
-                  className="w-full"
+                  className="w-full text-accent"
                   disabled={disabledApprove || isLoadingApprove}
                   plateChildren={<ButtonACCENTMiniPlateInterface />}
                   onClick={handleApprove}
