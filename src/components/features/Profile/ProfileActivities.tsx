@@ -2,7 +2,7 @@
 
 import { type FC } from "react";
 
-import { Lock, Palette, Dices, Sparkles } from "lucide-react";
+import { Lock, Dices, Sparkles, Rocket } from "lucide-react";
 
 import { TaskInterface } from "@/components/shared/Interfaces/VectorInterfaces/TaskInterface";
 import { useProfileActivities } from "@/hooks/queries/useProfile";
@@ -19,7 +19,7 @@ const getActivityIcon = (title: string) => {
     return <Lock className="w-5 h-5 text-white" />;
   }
   if (lowerTitle.includes("mint")) {
-    return <Palette className="w-5 h-5 text-white" />;
+    return <Rocket className="w-5 h-5 text-white" />;
   }
   if (lowerTitle.includes("raffle")) {
     return <Dices className="w-5 h-5 text-white" />;
@@ -35,7 +35,7 @@ export const ProfileActivities: FC = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="title-mini">Recent Activity</h3>
+        <h3 className="title-normal font-tusker-exp">Recent Activity</h3>
         <button className="text-accent text-sm hover:underline">
           View all
         </button>

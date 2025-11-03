@@ -4,7 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { type Metadata } from "next";
 import { Toaster } from "sonner";
 
-import { Footer } from "@/components/features/Footer/Footer";
+import { FooterGeneral } from "@/components/features/Footer/FooterGeneral";
 import { HeaderGeneral } from "@/components/features/Header/HeaderGeneral";
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function ProfileLayout({
       <div>
         <HeaderGeneral />
         <main className="relative min-h-screen bg-background">{children}</main>
-        <Footer />
+        <FooterGeneral />
       </div>
     </>
   );

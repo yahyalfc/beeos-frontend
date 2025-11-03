@@ -13,6 +13,7 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default: "bg-transparent",
+        accent: "bg-transparent",
       },
       size: {
         default: "px-4 py-[7px] text-xs text-default",
@@ -42,7 +43,9 @@ function Badge({
       data-slot="badge"
       {...props}
     >
-      <BadgeInterface />
+      <BadgeInterface
+        color={variant === "accent" ? "#17252D" : undefined}
+      />
       <span className="inline-block relative z-[2]">{children}</span>
     </Comp>
   );

@@ -161,8 +161,11 @@
   .title-md {
     @apply text-white text-[40px] md:text-[48px] leading-[112%] font-tusker-exp font-semibold uppercase tracking-[0%];
   }
+  .title-normal {
+    @apply text-white text-3xl leading-[36px] font-inter font-medium uppercase tracking-[-4%];
+  }
   .title-mini {
-    @apply text-white text-2xl leading-[30px] font-inter font-medium uppercase tracking-[-4text-%];
+    @apply text-white text-2xl leading-[30px] font-inter font-medium uppercase tracking-[-4%];
   }
   .title-small {
     @apply text-white text-[44px] leading-[108%] font-tusker-exp font-semibold uppercase tracking-[0%];

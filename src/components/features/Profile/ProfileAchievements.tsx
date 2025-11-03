@@ -3,7 +3,7 @@
 
 import { type FC } from "react";
 
-import { Trophy, Palette, Users, Zap, Sparkles, Check } from "lucide-react";
+import { Trophy, Users, Zap, Sparkles, Check, Lock } from "lucide-react";
 
 import { TaskInterface } from "@/components/shared/Interfaces/VectorInterfaces/TaskInterface";
 import { useProfileAchievements } from "@/hooks/queries/useProfile";
@@ -32,7 +32,7 @@ const MOCK_ACHIEVEMENTS: MockAchievement[] = [
     current: 5,
     target: 5,
     createdAt: new Date().toISOString(),
-    icon: <Palette className="w-6 h-6 text-accent" />,
+    icon: <Lock className="w-6 h-6 text-accent" />,
   },
   {
     id: "3",
@@ -65,7 +65,7 @@ export const ProfileAchievements: FC = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="title-mini mb-4">Achievements</h3>
+      <h3 className="title-normal font-tusker-exp mb-4">Achievements</h3>
 
       <div className="flex flex-col gap-3">
         {isLoading ? (
