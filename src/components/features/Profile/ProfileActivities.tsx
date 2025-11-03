@@ -45,8 +45,8 @@ export const ProfileActivities: FC = () => {
         {isLoading ? (
           <div className="text-mini text-slight">Loading activities...</div>
         ) : (
-          displayActivities.slice(0, 5).map((activity, index) => (
-            <div key={index} className="relative px-6 py-4">
+          displayActivities.slice(0, 5).map((activity) => (
+            <div key={activity.title} className="relative px-6 py-4">
               <TaskInterface />
               <div className="relative z-[2] flex items-center justify-between">
                 <div className="flex items-center gap-3">

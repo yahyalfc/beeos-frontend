@@ -1,42 +1,46 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable sonarjs/no-commented-code */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable sonarjs/no-nested-conditional */
 "use client";
 
-import { type FC, useEffect } from "react";
+import { type FC, 
+  // useEffect
+ } from "react";
 
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 import { useWallet } from "@/components/providers/Wallet.provider";
 import { shortenAddress } from "@/helpers/shortenAddress";
-import { useCreateWallet } from "@/hooks/mutations/useProfileMutations";
+// import { useCreateWallet } from "@/hooks/mutations/useProfileMutations";
 
 import { HeaderCard } from "../Cards/HeaderCard";
 
 export const HeaderRightBlock: FC = ({}) => {
-  const router = useRouter();
+  // const router = useRouter();
   const {
     isConnected,
     isNeededSign,
     walletAddress,
     openConnectModal,
+    openAccountModal,
     handleSignMessage,
   } = useWallet();
-  const { mutate: createWallet } = useCreateWallet();
+  // const { mutate: createWallet } = useCreateWallet();
   const isWalletExist = isConnected && walletAddress;
 
   // Create wallet in profile backend when wallet is connected
-  useEffect(() => {
-    if (isWalletExist && walletAddress) {
-      createWallet(walletAddress);
-    }
-  }, [isWalletExist, walletAddress, createWallet]);
+  // useEffect(() => {
+  //   if (isWalletExist && walletAddress) {
+  //     createWallet(walletAddress);
+  //   }
+  // }, [isWalletExist, walletAddress, createWallet]);
 
   const handleClick = () => {
     if (isNeededSign && walletAddress) {
       void handleSignMessage(walletAddress);
     } else if (isWalletExist) {
-      router.push(`/profile`);
+      // router.push(`/profile`);
+      void openAccountModal()
     } else {
       void openConnectModal();
     }
