@@ -53,10 +53,10 @@ export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
         <div className="flex flex-row items-center justify-between">
           <h2 className="text-default text-sm text-regent">Total minted</h2>
           <span className="text-white text-default text-sm">
-            {progress}%&nbsp;
+            {Math.max(0, progress)}%&nbsp;
             <span className="text-regent">
               {isMinting
-                ? `${scaledValue}/${totalSupply}`
+                ? `${Math.max(0, scaledValue)}/${totalSupply}`
                 : isUpcoming
                 ? `0/${totalSupply}`
                 : `${totalSupply}/${totalSupply}`}
