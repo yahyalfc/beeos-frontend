@@ -170,7 +170,7 @@ export const CollectionSingleHeroContent: FC<
 
   const today = new Date();
   const utcDateMint = new Date(
-    Date.UTC(today.getUTCFullYear(), 8, 1, 11, 0, 0)
+    Date.UTC(today.getUTCFullYear(), 10, 18, 11, 0, 0)
   );
 
   const collectionStatus = status;
@@ -256,7 +256,7 @@ export const CollectionSingleHeroContent: FC<
       </div>
       {phase === PHASES.PRE_PHASE || isUpcoming || isQuesting || !isMinting ? (
         <DefaultButton size="wide" variant="ghost">
-          {isUpcoming ? "Questing" : "Mint"} {isEnded ? "Started" : "Starts"}
+          Mint {isEnded ? "Started" : "Starts"}
           &nbsp;-&nbsp;
           {isUpcoming || isQuesting || !isMinting ? (
             <span className="text-white">

@@ -51,7 +51,7 @@ export const MinterHeading: FC<MinterHeadingProps> = ({
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <Badge className="capitalize">{blockchainName}</Badge>
+        <Badge className="capitalize">{collectionName.includes("Vault of Fortune") ? "Arbitrum" : blockchainName}</Badge>
         <Badge>
           <span className="text-regent">supply:</span>&nbsp;{amountNft}
         </Badge>
