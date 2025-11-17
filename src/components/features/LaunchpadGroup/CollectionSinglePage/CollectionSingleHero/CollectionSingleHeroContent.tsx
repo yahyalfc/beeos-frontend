@@ -170,7 +170,7 @@ export const CollectionSingleHeroContent: FC<
 
   const today = new Date();
   const utcDateMint = new Date(
-    Date.UTC(today.getUTCFullYear(), 10, 19, 15, 0, 0)
+    Date.UTC(today.getUTCFullYear(), 10, 19, 16, 0, 0)
   );
 
   const collectionStatus = status;
