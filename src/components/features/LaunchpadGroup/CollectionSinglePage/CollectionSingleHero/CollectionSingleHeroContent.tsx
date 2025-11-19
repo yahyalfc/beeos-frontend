@@ -61,7 +61,7 @@ export const CollectionSingleHeroContent: FC<
 
   const today = new Date();
   const utcDateMint = new Date(
-    Date.UTC(today.getUTCFullYear(), 10, 19, 16, 30, 0)
+    Date.UTC(today.getUTCFullYear(), 10, 19, 12, 10, 0)
   );
 
   const {
