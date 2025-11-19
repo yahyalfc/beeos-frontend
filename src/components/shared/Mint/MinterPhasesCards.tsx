@@ -29,7 +29,7 @@ export const MinterPhasesCards: FC<MinterPhasesCardsProps> = ({
         key="top"
         isActive={phase === PHASES.WHITELIST}
         timer={phase === PHASES.WHITELIST ? timer : null}
-        title="Guaranteed Phase"
+        title="Whitelist Phase"
         type="top"
         onTimerEnded={onTimerEnded}
       />
@@ -37,7 +37,7 @@ export const MinterPhasesCards: FC<MinterPhasesCardsProps> = ({
         <MinterPhases
           isActive={phase === PHASES.WAITLIST}
           timer={phase === PHASES.WAITLIST ? timer : null}
-          title="Whitelist Phase 2"
+          title="Waitlist Phase"
           type="middle"
           onTimerEnded={onTimerEnded}
         />
