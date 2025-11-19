@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-commented-code */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable sonarjs/no-nested-conditional */
 /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -59,10 +60,10 @@ export const CollectionSingleHeroContent: FC<
 
   const { collectionProfile } = useCollectionSingleContext();
 
-  const today = new Date();
-  const utcDateMint = new Date(
-    Date.UTC(today.getUTCFullYear(), 10, 20, 16, 0, 0)
-  );
+  // const today = new Date();
+  // const utcDateMint = new Date(
+  //   Date.UTC(today.getUTCFullYear(), 10, 10, 16, 0, 0)
+  // );
 
   const {
     isMinted,
@@ -178,8 +179,8 @@ export const CollectionSingleHeroContent: FC<
   const isUpcoming = collectionStatus.statusName === PROJECT_STATUSES.UPCOMING;
   const isQuesting = collectionStatus.statusName === PROJECT_STATUSES.QUESTING;
   const isMinting =
-    collectionStatus.statusName === PROJECT_STATUSES.MINT
-     && Date.now() >= utcDateMint.getTime();
+    collectionStatus.statusName === PROJECT_STATUSES.MINT;
+    //  && Date.now() >= utcDateMint.getTime();
 
   const minterActionLabel =
     phase === PHASES.PRE_PHASE || !isMinting
@@ -260,14 +261,15 @@ export const CollectionSingleHeroContent: FC<
           &nbsp;-&nbsp;
           {isUpcoming || isQuesting || !isMinting ? (
             <span className="text-white">
-              {utcDateMint.toLocaleString("en-US", {
+              {/* {utcDateMint.toLocaleString("en-US", {
                 month: "numeric",
                 day: "numeric",
                 hour: "2-digit",
                 minute: "2-digit",
                 timeZone: "UTC",
               })}
-              &nbsp;UTC
+              &nbsp;UTC */}
+              N/A
             </span>
           ) : (
             <TimerSmall
