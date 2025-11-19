@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 
-import {
-  polygon,
-} from "@reown/appkit/networks";
+import { arbitrum } from "@reown/appkit/networks";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { useMutation } from "@tanstack/react-query";
 import { readContract } from "@wagmi/core";
@@ -13,11 +11,11 @@ import { checkMerkleList, getMerkleProof } from "@/lib/api/externalApi";
 import { config } from "@/utils/config";
 import { THREES_NAMES_CHECK } from "@/utils/mint.constants";
 
-import MinterABI from "./TeaFiMinterProd.json";
+import MinterABI from "./EarnVerseMinter1.abi.json";
 import { type PropStamp } from "./useMintCountdown";
 
-export const contractAddress = "0xD50175Ad67a1D897F4022d25228F2053849E0d51";
-export const AMOUNT_NFT = 4000;
+export const contractAddress = "0xe4fFD4eA34e16647B36C598a9b1bab144426e36c";
+export const AMOUNT_NFT = 5555;
 
 export enum PHASES {
   WHITELIST = "whitelist",
@@ -50,9 +48,9 @@ export const useMinter = () => {
     isError,
   } = useReadContract({
     address: contractAddress as `0x${string}`,
-    abi: MinterABI.abi,
+    abi: MinterABI,
     functionName: "supplyRemains",
-    chainId: polygon.id,
+    chainId: arbitrum.id,
   });
 
   const {
@@ -61,9 +59,9 @@ export const useMinter = () => {
     refetch: refetchGtd,
   } = useReadContract({
     address: contractAddress as `0x${string}`,
-    abi: MinterABI.abi,
+    abi: MinterABI,
     functionName: "startGTD",
-    chainId: polygon.id,
+    chainId: arbitrum.id,
   });
 
   const {
@@ -72,9 +70,9 @@ export const useMinter = () => {
     refetch: refetchWait,
   } = useReadContract({
     address: contractAddress as `0x${string}`,
-    abi: MinterABI.abi,
+    abi: MinterABI,
     functionName: "startWait",
-    chainId: polygon.id,
+    chainId: arbitrum.id,
   });
 
   const {
@@ -83,9 +81,9 @@ export const useMinter = () => {
     refetch: refetchPublic,
   } = useReadContract({
     address: contractAddress as `0x${string}`,
-    abi: MinterABI.abi,
+    abi: MinterABI,
     functionName: "startPublic",
-    chainId: polygon.id,
+    chainId: arbitrum.id,
   });
 
   const checkUserAddress = async () => {
@@ -105,9 +103,9 @@ export const useMinter = () => {
           treeName: THREES_NAMES_CHECK.WAITLIST,
         });
 
-        if (resWhiteList.inWhitelist) {
+        if (resWhiteList.whitelisted) {
           return PHASES.WHITELIST;
-        } else if (resWaitList.inWhitelist) {
+        } else if (resWaitList.whitelisted) {
           return PHASES.WAITLIST;
         } else {
           return PHASES.PUBLIC;
@@ -124,9 +122,9 @@ export const useMinter = () => {
   const readSupplyAmount = async (): Promise<bigint | undefined> => {
     const res: bigint | undefined = (await readContract(config, {
       address: contractAddress as `0x${string}`,
-      abi: MinterABI.abi,
+      abi: MinterABI,
       functionName: "supplyRemains",
-      chainId: polygon.id,
+      chainId: arbitrum.id,
     })) as bigint;
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (res != undefined) {
@@ -138,9 +136,9 @@ export const useMinter = () => {
   const readPublicPhase = async (): Promise<bigint | undefined> => {
     const res: bigint | undefined = (await readContract(config, {
       address: contractAddress as `0x${string}`,
-      abi: MinterABI.abi,
+      abi: MinterABI,
       functionName: "claimed",
-      chainId: polygon.id,
+      chainId: arbitrum.id,
 
       args: [address],
     })) as bigint;
@@ -154,9 +152,9 @@ export const useMinter = () => {
   const readWaitWhitePhases = async (): Promise<boolean> => {
     const res = await readContract(config, {
       address: contractAddress as `0x${string}`,
-      abi: MinterABI.abi,
+      abi: MinterABI,
       functionName: "claimed",
-      chainId: polygon.id,
+      chainId: arbitrum.id,
 
       args: [address],
     });
@@ -214,10 +212,10 @@ export const useMinter = () => {
         if (supplyRemains && merkleProof) {
           writeContract({
             address: contractAddress as `0x${string}`,
-            abi: MinterABI.abi,
+            abi: MinterABI,
             functionName: "mintWithProof",
             args: [merkleProof.proof],
-            chainId: polygon.id,
+            chainId: arbitrum.id,
           });
           return { success: true };
         }
@@ -236,19 +234,19 @@ export const useMinter = () => {
         if (supplyRemains && merkleProof) {
           writeContract({
             address: contractAddress as `0x${string}`,
-            abi: MinterABI.abi,
+            abi: MinterABI,
             functionName: "mintWithProof",
             args: [merkleProof.proof],
-            chainId: polygon.id,
+            chainId: arbitrum.id,
           });
           return { success: true };
         }
       } else if (phase === PHASES.PUBLIC) {
         writeContract({
           address: contractAddress as `0x${string}`,
-          abi: MinterABI.abi,
+          abi: MinterABI,
           functionName: "mintPublic",
-          chainId: polygon.id,
+          chainId: arbitrum.id,
         });
         return { success: true };
       }

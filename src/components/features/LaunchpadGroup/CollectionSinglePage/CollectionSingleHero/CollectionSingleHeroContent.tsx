@@ -59,6 +59,11 @@ export const CollectionSingleHeroContent: FC<
 
   const { collectionProfile } = useCollectionSingleContext();
 
+  const today = new Date();
+  const utcDateMint = new Date(
+    Date.UTC(today.getUTCFullYear(), 10, 19, 16, 0, 0)
+  );
+
   const {
     isMinted,
     nftCount,
@@ -140,6 +145,8 @@ export const CollectionSingleHeroContent: FC<
     window.location.reload();
   };
 
+  console.log("status", status);
+
   const handleCheckUserState = useCallback(
     async (walletAddress?: string) => {
       try {
@@ -168,18 +175,13 @@ export const CollectionSingleHeroContent: FC<
     [checkStatus, setParams, collectionProfile, address, id]
   );
 
-  const today = new Date();
-  const utcDateMint = new Date(
-    Date.UTC(today.getUTCFullYear(), 10, 19, 16, 0, 0)
-  );
-
   const collectionStatus = status;
   const isEnded = collectionStatus.statusName === PROJECT_STATUSES.FINISHED;
   const isUpcoming = collectionStatus.statusName === PROJECT_STATUSES.UPCOMING;
   const isQuesting = collectionStatus.statusName === PROJECT_STATUSES.QUESTING;
   const isMinting =
-    collectionStatus.statusName === PROJECT_STATUSES.MINT &&
-    Date.now() >= utcDateMint.getTime();
+    collectionStatus.statusName === PROJECT_STATUSES.MINT
+     && Date.now() >= utcDateMint.getTime();
 
   const minterActionLabel =
     phase === PHASES.PRE_PHASE || !isMinting

@@ -8,7 +8,7 @@ export const checkMerkleList = async ({
 }: {
   wallet: string;
   treeName: THREES_NAMES_CHECK;
-}): Promise<{ inWhitelist: boolean }> => {
+}): Promise<{ whitelisted: boolean }> => {
   const response = await fetch(
     `${API_BASE_URL}/whitelists/check-merkle-whitelist?treeName=${treeName}&wallet=${wallet}`,
     {
@@ -16,6 +16,7 @@ export const checkMerkleList = async ({
       headers: {
         "Cache-Control": "no-cache",
         Pragma: "no-cache",
+        "Content-Type": "application/json",
       },
     }
   );
@@ -42,6 +43,7 @@ export const getMerkleProof = async ({
       headers: {
         "Cache-Control": "no-cache",
         Pragma: "no-cache",
+        "Content-Type": "application/json",
       },
     }
   );

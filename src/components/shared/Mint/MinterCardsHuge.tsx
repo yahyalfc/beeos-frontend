@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-commented-code */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable sonarjs/no-nested-conditional */
 "use client";
@@ -32,17 +33,17 @@ export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
   actionName,
   onAction,
 }) => {
-  function scaleValue(value: number, fromMax: number, toMax: number) {
-    return (value / fromMax) * toMax;
-  }
+  // function scaleValue(value: number, fromMax: number, toMax: number) {
+  //   return (value / fromMax) * toMax;
+  // }
 
   // Usage
-  const originalValue = currentlyMinted - 1500;
-  const scaledValue = scaleValue(originalValue, 2500, 4000);
+  const originalValue = currentlyMinted;
+  // const scaledValue = scaleValue(originalValue, 2500, 4000);
 
   const progress = isEnded
     ? 100
-    : Math.floor((scaledValue / totalSupply) * 1000) / 10;
+    : Math.floor((originalValue / totalSupply) * 1000) / 10;
 
   const isPriceZero = price === "0";
   return (
@@ -56,7 +57,7 @@ export const MinterCardsHuge: FC<MinterCardsHugeProps> = ({
             {Math.max(0, progress)}%&nbsp;
             <span className="text-regent">
               {isMinting
-                ? `${Math.max(0, scaledValue)}/${totalSupply}`
+                ? `${Math.max(0, originalValue)}/${totalSupply}`
                 : isUpcoming
                 ? `0/${totalSupply}`
                 : `${totalSupply}/${totalSupply}`}
