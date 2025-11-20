@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable sonarjs/no-commented-code */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable sonarjs/no-nested-conditional */
@@ -31,7 +32,7 @@ import { DefaultButton } from "@/components/shared/UI/Button/DefaultButton";
 import TimerSmall from "@/components/shared/UI/Timer/TimerSmall";
 import { smoothScrollTo } from "@/helpers/smoothScrollTo";
 import { useMintCountdown } from "@/hooks/mint/useMintCountdown";
-import { PHASES, useMinter } from "@/hooks/mint/useMinter";
+import { contractAddress, PHASES, useMinter } from "@/hooks/mint/useMinter";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
 import { useCheckWalletStatus } from "@/hooks/wallet/useCheckWalletStatus";
 import { PROJECT_STATUSES, type Collection } from "@/types/collections";
@@ -64,6 +65,8 @@ export const CollectionSingleHeroContent: FC<
   // const utcDateMint = new Date(
   //   Date.UTC(today.getUTCFullYear(), 10, 10, 16, 0, 0)
   // );
+
+  console.log("contract", contractAddress)
 
   const {
     isMinted,
