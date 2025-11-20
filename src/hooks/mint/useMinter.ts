@@ -14,7 +14,7 @@ import { THREES_NAMES_CHECK } from "@/utils/mint.constants";
 import MinterABI from "./EarnVerseMinter1.abi.json";
 import { type PropStamp } from "./useMintCountdown";
 
-export const contractAddress = "0xD399602EAeb72754424B3fb0686a4dCB03002519";
+export const contractAddress = "0xf6266a8128bC90275097166015794c5b57973f95";
 export const AMOUNT_NFT = 5555;
 
 export enum PHASES {
