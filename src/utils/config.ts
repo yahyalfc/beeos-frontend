@@ -1,6 +1,7 @@
 import {
   type AppKitNetwork,
   arbitrum,
+  mainnet,
 } from "@reown/appkit/networks";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
 import { cookieStorage, createStorage, http } from "@wagmi/core";
@@ -30,7 +31,7 @@ export const customArbitrum = {
 };
 
 // Only Arbitrum network
-export const networks: AppKitNetwork[] = [customArbitrum];
+export const networks: AppKitNetwork[] = [mainnet];
 
 // Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({
@@ -42,7 +43,7 @@ export const wagmiAdapter = new WagmiAdapter({
   projectId,
   networks,
   transports: {
-    [arbitrum.id]: http(ARBITRUM_RPC_URL),
+    [mainnet.id]: http(mainnet.rpcUrls.default.http[0]),
   },
 });
 
