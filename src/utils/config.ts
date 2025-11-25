@@ -15,6 +15,7 @@ if (!projectId) {
 }
 
 // Sepolia RPC URL
+export const MAINNET_RPC_URL = "https://ethereum-rpc.publicnode.com";
 export const ARBITRUM_RPC_URL = "https://go.getblock.io/2120e985bbf4402f8dfd2311683260c8";
 
 // Custom Sepolia configuration with your RPC
@@ -30,6 +31,19 @@ export const customArbitrum = {
   },
 };
 
+export const customMainnet = {
+  ...mainnet,
+  rpcUrls: {
+    default: {
+      http: [MAINNET_RPC_URL],
+    },
+    public: {
+      http: [MAINNET_RPC_URL],
+    },
+  },
+};
+
+
 // Only Arbitrum network
 export const networks: AppKitNetwork[] = [mainnet];
 
@@ -43,7 +57,7 @@ export const wagmiAdapter = new WagmiAdapter({
   projectId,
   networks,
   transports: {
-    [mainnet.id]: http(mainnet.rpcUrls.default.http[0]),
+    [mainnet.id]: http(MAINNET_RPC_URL),
   },
 });
 

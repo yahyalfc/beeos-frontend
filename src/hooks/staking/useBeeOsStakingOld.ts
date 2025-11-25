@@ -293,6 +293,7 @@ export const useBeeOsStakingOld = (): {
   const getLockedNFTs = useCallback(async (): Promise<void> => {
     const resultsLocked: IArenaNFTResult[] = [];
     const lockedNftId = locked?.flatMap((item) => item.nftIds) || [];
+    console.log("Locked NFT IDs:", lockedNftId);
     const tokenItemsWithTime = (lockedByAddress?.data as any[])
       ?.filter((item) => item?.isLocked)
       ?.map((item: any) => ({
@@ -304,6 +305,8 @@ export const useBeeOsStakingOld = (): {
       try {
         const tokenIds = tokenItemsWithTime.map((item: any) => item.tokenId);
         const { nfts } = await fetchBatchNFTMetadata(tokenIds);
+
+        console.log("Fetched locked NFTs metadata:", nfts);
 
         nfts.forEach((nft: ProcessedNFT) => {
           const tokenItem = tokenItemsWithTime.find(
