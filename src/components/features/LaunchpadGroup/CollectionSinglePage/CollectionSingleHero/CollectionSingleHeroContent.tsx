@@ -61,12 +61,12 @@ export const CollectionSingleHeroContent: FC<
 
   const { collectionProfile } = useCollectionSingleContext();
 
-  // const today = new Date();
-  // const utcDateMint = new Date(
-  //   Date.UTC(today.getUTCFullYear(), 10, 10, 16, 0, 0)
-  // );
+  const today = new Date();
+  const utcDateMint = new Date(
+    Date.UTC(today.getUTCFullYear(), 11, 2, 16, 0, 0)
+  );
 
-  console.log("contract", contractAddress)
+  console.log("contract", contractAddress);
 
   const {
     isMinted,
@@ -182,8 +182,8 @@ export const CollectionSingleHeroContent: FC<
   const isUpcoming = collectionStatus.statusName === PROJECT_STATUSES.UPCOMING;
   const isQuesting = collectionStatus.statusName === PROJECT_STATUSES.QUESTING;
   const isMinting =
-    collectionStatus.statusName === PROJECT_STATUSES.MINT;
-    //  && Date.now() >= utcDateMint.getTime();
+    collectionStatus.statusName === PROJECT_STATUSES.MINT &&
+    Date.now() >= utcDateMint.getTime();
 
   const minterActionLabel =
     phase === PHASES.PRE_PHASE || !isMinting
@@ -264,15 +264,15 @@ export const CollectionSingleHeroContent: FC<
           &nbsp;-&nbsp;
           {isUpcoming || isQuesting || !isMinting ? (
             <span className="text-white">
-              {/* {utcDateMint.toLocaleString("en-US", {
+              {utcDateMint.toLocaleString("en-US", {
                 month: "numeric",
                 day: "numeric",
                 hour: "2-digit",
                 minute: "2-digit",
                 timeZone: "UTC",
               })}
-              &nbsp;UTC */}
-              N/A
+              &nbsp;UTC
+              {/* N/A */}
             </span>
           ) : (
             <TimerSmall
