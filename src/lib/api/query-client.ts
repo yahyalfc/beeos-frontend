@@ -1,0 +1,27 @@
+import { QueryClient } from "@tanstack/react-query";
+
+function makeQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 1000, // 1m
+        gcTime: 5 * 60 * 1000, // 5m
+        refetchOnWindowFocus: false,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
+  });
+}
+
+let browserQueryClient: QueryClient | undefined = undefined;
+
+export function getQueryClient() {
+  if (typeof window === "undefined") {
+    return makeQueryClient();
+  } else {
+    browserQueryClient ??= makeQueryClient();
+    return browserQueryClient;
+  }
+}

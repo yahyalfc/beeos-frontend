@@ -1,0 +1,4 @@
+export enum THREES_NAMES_CHECK {
+  WHITELIST = "GTD",
+  WAITLIST = "FCFS",
+}
