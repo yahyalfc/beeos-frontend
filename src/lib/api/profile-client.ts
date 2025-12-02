@@ -7,7 +7,7 @@ import axios, {
 } from "axios";
 
 import { USER_KEY } from "@/utils/constants";
-
+const NEXT_PUBLIC_PROFILE_API_URL = "https://beeos-dev-api.lumoscodes.dev";
 export class ProfileApiError extends Error {
   constructor(public status: number, public data: any, message: string) {
     super(message);
@@ -20,10 +20,7 @@ class ProfileApiClient {
 
   constructor() {
     this.client = axios.create({
-      baseURL: `${
-        process.env.NEXT_PUBLIC_PROFILE_API_URL ??
-        process.env.NEXT_PUBLIC_API_URL
-      }/api/v1`,
+      baseURL: `${NEXT_PUBLIC_PROFILE_API_URL}/api/v1`,
       headers: {
         "Content-Type": "application/json",
       },
