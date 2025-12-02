@@ -9,59 +9,12 @@ import { TaskInterface } from "@/components/shared/Interfaces/VectorInterfaces/T
 import { useProfileAchievements } from "@/hooks/queries/useProfile";
 import { type ProfileAchievement } from "@/types/profile";
 
-interface MockAchievement extends ProfileAchievement {
-  icon?: React.ReactNode;
-}
-
-const MOCK_ACHIEVEMENTS: MockAchievement[] = [
-  {
-    id: "1",
-    wallet: "",
-    title: "First Stake",
-    description: "Complete your first staking",
-    current: 1,
-    target: 1,
-    createdAt: new Date().toISOString(),
-    icon: <Trophy className="w-6 h-6 text-accent" />,
-  },
-  {
-    id: "2",
-    wallet: "",
-    title: "NFT Collector",
-    description: "Mint 5 NFTs",
-    current: 5,
-    target: 5,
-    createdAt: new Date().toISOString(),
-    icon: <Lock className="w-6 h-6 text-accent" />,
-  },
-  {
-    id: "3",
-    wallet: "",
-    title: "Community Hero",
-    description: "Join 10 raffles",
-    current: 3,
-    target: 10,
-    createdAt: new Date().toISOString(),
-    icon: <Users className="w-6 h-6 text-white" />,
-  },
-  {
-    id: "4",
-    wallet: "",
-    title: "Power User",
-    description: "Earn 10,000 points",
-    current: 1847,
-    target: 10000,
-    createdAt: new Date().toISOString(),
-    icon: <Zap className="w-6 h-6 text-white" />,
-  },
-];
-
 export const ProfileAchievements: FC = () => {
   const { data: achievements, isLoading } = useProfileAchievements();
 
-  const displayAchievements = achievements?.length
+  const displayAchievements: ProfileAchievement[] = achievements?.length
     ? achievements
-    : MOCK_ACHIEVEMENTS;
+    : [];
 
   return (
     <div className="flex flex-col gap-4">
@@ -70,7 +23,7 @@ export const ProfileAchievements: FC = () => {
       <div className="flex flex-col gap-3">
         {isLoading ? (
           <div className="text-mini text-slight">Loading achievements...</div>
-        ) : (
+        ) : displayAchievements.length ? (
           displayAchievements.map((achievement, index) => {
             const isCompleted = achievement.current >= achievement.target;
             const progressPercentage = achievement.target
@@ -126,6 +79,8 @@ export const ProfileAchievements: FC = () => {
               </div>
             );
           })
+        ) : (
+          <>No Achievements found</>
         )}
       </div>
     </div>
