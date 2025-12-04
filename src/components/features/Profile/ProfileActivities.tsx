@@ -7,12 +7,6 @@ import { Lock, Dices, Sparkles, Rocket } from "lucide-react";
 import { TaskInterface } from "@/components/shared/Interfaces/VectorInterfaces/TaskInterface";
 import { useProfileActivities } from "@/hooks/queries/useProfile";
 
-const MOCK_ACTIVITIES = [
-  { title: "Stake", points: 120, date: "Aug" },
-  { title: "Mint", points: 85, date: "Aug" },
-  { title: "Raffle", points: 50, date: "Aug" },
-];
-
 const getActivityIcon = (title: string) => {
   const lowerTitle = title.toLowerCase();
   if (lowerTitle.includes("stake")) {
@@ -30,7 +24,7 @@ const getActivityIcon = (title: string) => {
 export const ProfileActivities: FC = () => {
   const { data: activities, isLoading } = useProfileActivities();
 
-  const displayActivities = activities?.length ? activities : MOCK_ACTIVITIES;
+  const displayActivities = activities?.length ? activities : [];
 
   return (
     <div className="flex flex-col gap-4">
@@ -44,7 +38,7 @@ export const ProfileActivities: FC = () => {
       <div className="flex flex-col gap-3">
         {isLoading ? (
           <div className="text-mini text-slight">Loading activities...</div>
-        ) : (
+        ) : displayActivities.length ? (
           displayActivities.slice(0, 5).map((activity) => (
             <div key={activity.title} className="relative px-6 py-4">
               <TaskInterface />
@@ -58,11 +52,11 @@ export const ProfileActivities: FC = () => {
                       {activity.title}
                     </span>
                     {/* <span className="text-mini text-slight">
-                      {activity.date ||
-                        new Date().toLocaleDateString("en-US", {
-                          month: "short",
-                        })}
-                    </span> */}
+                    {activity.date ||
+                      new Date().toLocaleDateString("en-US", {
+                        month: "short",
+                      })}
+                  </span> */}
                   </div>
                 </div>
                 <span className="text-accent font-semibold">
@@ -71,6 +65,8 @@ export const ProfileActivities: FC = () => {
               </div>
             </div>
           ))
+        ) : (
+          <>No Activities found</>
         )}
       </div>
     </div>

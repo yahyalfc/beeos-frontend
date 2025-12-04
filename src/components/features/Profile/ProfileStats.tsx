@@ -9,7 +9,9 @@ import { ProfileXPInterface } from "@/components/shared/Interfaces/VectorInterfa
 export const ProfileStats: FC = () => {
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-2xl uppercase font-tusker-exp font-medium text-white">Earn More Bee Points:</h2>
+      <h2 className="text-2xl uppercase font-tusker-exp font-medium text-white">
+        Earn More Bee Points:
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="relative px-6 py-8">
           <ProfileXPInterface />
@@ -60,7 +62,7 @@ export const ProfileStats: FC = () => {
           </div>
         </div>
 
-        <div className="relative px-6 py-8">
+        {/* <div className="relative px-6 py-8">
           <ProfileXPInterface />
           <div className="relative z-[2] flex flex-col gap-2">
             <Bot className="w-8 h-8 text-slight" />
@@ -73,7 +75,7 @@ export const ProfileStats: FC = () => {
               Coming Soon
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
