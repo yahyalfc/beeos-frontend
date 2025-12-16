@@ -245,7 +245,6 @@
 }
 .cardbottom_prnt {
   position: relative;
-  max-width: 690px;
   width: 100%;
   height: 529px;
   z-index: 99;
@@ -253,7 +252,7 @@
 .img_bg_bottom {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 590px;
   z-index: -1;
 }
 .inner_card {
@@ -262,11 +261,15 @@
   justify-content: space-between;
   width: 100%;
 }
+.card_content {
+  height: 690px;
+}
 .tittle_top {
   margin: 0px !important;
 }
 .card_top {
-  padding: 32px 32px 0px 32px;
+  padding: 0px 32px 0px 32px;
+  margin-top: 60px;
 }
 .topmost_prnt {
   display: flex;

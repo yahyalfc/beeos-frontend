@@ -23,11 +23,11 @@ export const ProfileAchievements: FC = () => {
       </h3>
       <div className="inner_card cardbottom_prnt relative">
         <img
-          className="img_bg_bottom absolute inset-0 w-full h-full object-cover"
+          className="img_bg_bottom absolute inset-0 w-full  object-cover"
           src="\profile-achievement-bg.png"
           alt=""
         />
-        <div className="relative z-[1] max-h-[600px] overflow-y-auto flex flex-col gap-3 card_top scrollbar-thin scrollbar-thumb-accent/30 scrollbar-track-transparent">
+        <div className="relative z-[1] card_content overflow-y-auto flex flex-col gap-3 card_top scrollbar-thin scrollbar-thumb-accent/30 scrollbar-track-transparent">
           {isLoading ? (
             <div className="text-mini text-slight px-6 py-4">
               Loading achievements...

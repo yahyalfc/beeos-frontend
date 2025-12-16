@@ -34,7 +34,7 @@ export const ProfileActivities: FC = () => {
 
       <div className="inner_card cardbottom_prnt relative">
         <img
-          className="img_bg_bottom absolute inset-0 w-full h-full object-cover"
+          className="img_bg_bottom absolute inset-0 w-full  object-cover"
           src="\profile-achievement-bg.png"
           alt=""
         />
