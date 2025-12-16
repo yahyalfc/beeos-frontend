@@ -27,7 +27,7 @@ export const ProfileActivities: FC = () => {
   const displayActivities = activities?.length ? activities : [];
 
   return (
-    <div className="flex flex-col gap-4 topmost_prnt">
+    <div className="flex flex-col gap-4  margin_top">
       <div className="flex items-center justify-between mb-4 tittle_top">
         <h3 className="title-normal font-tusker-exp">Recent Activities</h3>
       </div>
@@ -38,7 +38,7 @@ export const ProfileActivities: FC = () => {
           src="\profile-achievement-bg.png"
           alt=""
         />
-        <div className="relative z-[1] max-h-[600px] overflow-y-auto flex flex-col gap-3 card_top scrollbar-thin scrollbar-thumb-accent/30 scrollbar-track-transparent">
+        <div className="relative z-[1] max-h-[600px] overflow-y-auto flex flex-col gap-3 card_top scrollbar-thin scrollbar-thumb-accent/30 scrollbar-track-transparent nft_data">
           {isLoading ? (
             <div className="text-mini text-slight px-6 py-4">
               Loading activities...
