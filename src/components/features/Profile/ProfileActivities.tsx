@@ -27,47 +27,52 @@ export const ProfileActivities: FC = () => {
   const displayActivities = activities?.length ? activities : [];
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="title-normal font-tusker-exp">Recent Activity</h3>
-        <button className="text-accent text-sm hover:underline">
-          View all
-        </button>
+    <div className="flex flex-col gap-4 topmost_prnt ">
+
+
+      <div className="flex items-center justify-between mb-4 tittle_top">
+        <h3 className="title-normal font-tusker-exp">Recent Achivements</h3>
+
       </div>
 
-      <div className="flex flex-col gap-3">
-        {isLoading ? (
-          <div className="text-mini text-slight">Loading activities...</div>
-        ) : displayActivities.length ? (
-          displayActivities.slice(0, 5).map((activity) => (
-            <div key={activity.title} className="relative px-6 py-4">
-              <TaskInterface />
-              <div className="relative z-[2] flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center">
-                    {getActivityIcon(activity.title)}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-white font-medium">
-                      {activity.title}
-                    </span>
-                    {/* <span className="text-mini text-slight">
+      <div className="inner_card cardbottom_prnt">
+        <img className="img_bg_bottom" src="\bottom_card.png" alt="" />
+        <div className="flex flex-col gap-3 card_top">
+          {isLoading ? (
+            <div className="text-mini text-slight">Loading activities...</div>
+          ) : displayActivities.length ? (
+            displayActivities.slice(0, 5).map((activity) => (
+              <div key={activity.title} className="relative px-6 py-4">
+                <TaskInterface />
+                <div className="relative z-[2] flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center">
+                      {getActivityIcon(activity.title)}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-white font-medium">
+                        {activity.title}
+                      </span>
+                      {/* <span className="text-mini text-slight">
                     {activity.date ||
                       new Date().toLocaleDateString("en-US", {
                         month: "short",
                       })}
                   </span> */}
+                    </div>
                   </div>
+                  <span className="text-accent font-semibold">
+                    +{activity.points}
+                  </span>
                 </div>
-                <span className="text-accent font-semibold">
-                  +{activity.points}
-                </span>
+
               </div>
-            </div>
-          ))
-        ) : (
-          <>No Activities found</>
-        )}
+            ))
+          ) : (
+            <>No Activities found</>
+          )}
+        </div>
+
       </div>
     </div>
   );

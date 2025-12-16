@@ -15,7 +15,7 @@ export const ProfileXPInterface: FC<SVGProps<SVGSVGElement>> = ({
       width="100%"
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
-        "absolute top-0 left-0 right-0 bottom-0 w-full h-full",
+        "absolute top-0 left-0 right-0 bottom-0 w-full h-full  svg-interface-bg",
         className
       )}
       {...props}
