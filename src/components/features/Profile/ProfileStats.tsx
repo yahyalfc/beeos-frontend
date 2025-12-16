@@ -8,13 +8,13 @@ import { ProfileXPInterface } from "@/components/shared/Interfaces/VectorInterfa
 
 export const ProfileStats: FC = () => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 prnt_most">
       <h2 className="text-2xl uppercase font-tusker-exp font-medium text-white">
         Earn More Bee Points:
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 card_prnt">
         <div className="relative px-6 py-8">
-          <ProfileXPInterface />
+          <img className="bgcard" src="\profile-stats-bg-card.png" alt="" />
           <div className="relative z-[2] flex flex-col gap-2">
             <Lock className="w-8 h-8 text-accent" />
             <h4 className="text-lg font-medium text-white">NFT Staking</h4>
@@ -29,7 +29,7 @@ export const ProfileStats: FC = () => {
         </div>
 
         <div className="relative px-6 py-8">
-          <ProfileXPInterface />
+          <img className="bgcard" src="\profile-stats-bg-card.png" alt="" />
           <div className="relative z-[2] flex flex-col gap-2">
             <Rocket className="w-8 h-8 text-accent" />
             <h4 className="text-lg font-medium text-white">
@@ -46,7 +46,7 @@ export const ProfileStats: FC = () => {
         </div>
 
         <div className="relative px-6 py-8">
-          <ProfileXPInterface />
+          <img className="bgcard" src="\profile-stats-bg-card.png" alt="" />
           <div className="relative z-[2] flex flex-col gap-2">
             <Target className="w-8 h-8 text-accent" />
             <h4 className="text-lg font-medium text-white">

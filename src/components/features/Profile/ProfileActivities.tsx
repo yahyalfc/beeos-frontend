@@ -27,47 +27,62 @@ export const ProfileActivities: FC = () => {
   const displayActivities = activities?.length ? activities : [];
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="title-normal font-tusker-exp">Recent Activity</h3>
-        <button className="text-accent text-sm hover:underline">
-          View all
-        </button>
+    <div className="flex flex-col gap-4 topmost_prnt">
+      <div className="flex items-center justify-between mb-4 tittle_top">
+        <h3 className="title-normal font-tusker-exp">Recent Activities</h3>
       </div>
 
-      <div className="flex flex-col gap-3">
-        {isLoading ? (
-          <div className="text-mini text-slight">Loading activities...</div>
-        ) : displayActivities.length ? (
-          displayActivities.slice(0, 5).map((activity) => (
-            <div key={activity.title} className="relative px-6 py-4">
-              <TaskInterface />
-              <div className="relative z-[2] flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center">
-                    {getActivityIcon(activity.title)}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-white font-medium">
-                      {activity.title}
-                    </span>
-                    {/* <span className="text-mini text-slight">
-                    {activity.date ||
-                      new Date().toLocaleDateString("en-US", {
-                        month: "short",
-                      })}
-                  </span> */}
-                  </div>
-                </div>
-                <span className="text-accent font-semibold">
-                  +{activity.points}
-                </span>
-              </div>
+      <div className="inner_card cardbottom_prnt relative">
+        <img
+          className="img_bg_bottom absolute inset-0 w-full h-full object-cover"
+          src="\profile-achievement-bg.png"
+          alt=""
+        />
+        <div className="relative z-[1] max-h-[600px] overflow-y-auto flex flex-col gap-3 card_top scrollbar-thin scrollbar-thumb-accent/30 scrollbar-track-transparent">
+          {isLoading ? (
+            <div className="text-mini text-slight px-6 py-4">
+              Loading activities...
             </div>
-          ))
-        ) : (
-          <>No Activities found</>
-        )}
+          ) : displayActivities.length ? (
+            displayActivities.map((activity, index) => (
+              <div
+                key={`${activity.title}-${index}`}
+                className="relative px-6 py-4"
+              >
+                {/* TaskInterface as background for this specific item */}
+                <div className="absolute inset-0">
+                  <TaskInterface />
+                </div>
+
+                <div className="relative z-[2] flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center flex-shrink-0">
+                      {getActivityIcon(activity.title)}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-white font-medium">
+                        {activity.title}
+                      </span>
+                      {/* <span className="text-mini text-slight">
+                        {activity.date ||
+                          new Date().toLocaleDateString("en-US", {
+                            month: "short",
+                          })}
+                      </span> */}
+                    </div>
+                  </div>
+                  <span className="text-accent font-semibold flex-shrink-0">
+                    +{activity.points}
+                  </span>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-mini text-slight px-6 py-4">
+              No Activities found
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
