@@ -33,10 +33,10 @@ export const ProfileXPInterface: FC<SVGProps<SVGSVGElement>> = ({
           y1="0.000179171"
           y2="434.789"
         >
-          <stop stop-color="#0E1010" />
-          <stop offset="0.312525" stop-color="#0D1010" />
-          <stop offset="0.625029" stop-color="#131919" />
-          <stop offset="0.985611" stop-color="#0C0E0E" />
+          <stop stopColor="#0E1010" />
+          <stop offset="0.312525" stopColor="#0D1010" />
+          <stop offset="0.625029" stopColor="#131919" />
+          <stop offset="0.985611" stopColor="#0C0E0E" />
         </linearGradient>
       </defs>
     </svg>

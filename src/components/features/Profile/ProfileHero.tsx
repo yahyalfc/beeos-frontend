@@ -89,10 +89,10 @@ export const ProfileHero: FC = () => {
       <section className="relative block  pb-14 profile-hero-section">
         <ProfileXPInterface />
         <div className="flex flex-row items-center justify-space-between  hero-content">
-          <div className="relative w-32 h-32 rounded-full bg-accent/10 flex items-center justify-center">
+          <div className="relative w-32 h-32 rounded-full bg-accent/10 flex items-center justify-center imgprofile_hero">
             <img
               alt="Profile"
-              className="w-24 h-24 rounded-full"
+              className="w-24 h-24 rounded-full img_main"
               src={`https://api.dicebear.com/7.x/identicon/svg?seed=${walletAddress}`}
             />
             <div className="absolute -bottom-2 -right-2">
@@ -117,7 +117,7 @@ export const ProfileHero: FC = () => {
             )}
           </div>
 
-          <div className="relative px-10 py-7 max-w-[790px] w-full shrink-0 result-div">
+          <div className="relative px-10 py-7  result-div">
             {/* <ProfileXPInterface /> */}
             <div className="flex justify-center w-full  left_hero_stats">
               <div className="relative z-[2] flex flex-col items-center gap-2.5">
