@@ -182,3 +182,174 @@
     pointer-events: none !important;
   }
 }
+
+.profile-hero-section {
+  /* background-color: red; */
+  position: relative;
+  padding: 0px !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+/* .rounded-full {
+  width: 120px !important;
+  height: 120px !important;
+} */
+.imgprofile_hero {
+  width: 177px !important;
+  height: 120px !important;
+}
+.img_main {
+  width: 120px !important;
+  height: 120px !important;
+}
+.svg-interface-bg {
+  height: 200px;
+}
+.hero-content {
+  position: relative;
+  z-index: 99;
+  gap: 20px;
+  width: 100%;
+  padding: 16px 48px 16px 40px;
+}
+.result-div {
+  border-left: 1px solid rgba(33, 45, 53, 1);
+  width: 100% !important;
+  padding: 0px 0px 0px 40px !important;
+}
+.left_hero_stats {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+.bgcard {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 222px;
+}
+.nft_data {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.card_prnt {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 24px;
+}
+.prnt_most {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+.button_insert_code {
+  position: relative;
+  width: 162px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button_insert_code img {
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+.cardbottom_prnt {
+  position: relative;
+  width: 100%;
+  height: 529px;
+  z-index: 99;
+}
+.img_bg_bottom {
+  position: absolute;
+  width: 100%;
+  height: 590px;
+  z-index: -1;
+}
+.top_header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.buttonheader_card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.swiper {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+.inner_card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+.card_content {
+  height: 690px;
+}
+.tittle_top {
+  margin: 0px !important;
+}
+.card_top {
+  padding: 0px 32px 0px 32px;
+  margin-top: 60px;
+}
+.topmost_prnt {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+.input_modal {
+  padding: 18px 20px;
+  width: 100%;
+  border: 1px solid rgb(44, 62, 71);
+  border-radius: 12px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: #a7bcc0;
+}
+@media (max-width: 991px) {
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .profile-hero-section {
+    height: 450px;
+  }
+  .svg-interface-bg {
+    height: 450px;
+  }
+  .result-div {
+    padding-left: 0px !important;
+    border-left: 0px !important;
+  }
+  .card_prnt {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 650px) {
+  .left_hero_stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .card_top {
+    padding: 32px 10px;
+  }
+  .nft_data {
+    grid-template-columns: 1fr;
+  }
+  .margin_top {
+    margin-top: 70px;
+  }
+}

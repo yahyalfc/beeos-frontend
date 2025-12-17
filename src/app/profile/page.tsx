@@ -25,7 +25,6 @@ export default function ProfilePage() {
     //   router.push("/");
     //   return;
     // }
-
     // createWallet(walletAddress);
   }, [isConnected, walletAddress, router, createWallet]);
 
@@ -36,15 +35,15 @@ export default function ProfilePage() {
   return (
     <div className="container">
       <div className="inner-container pt-[120px]">
-        <div className="md:grid md:grid-cols-[1fr_3fr] gap-6">
+        <div className="md:grid md:grid-cols-[1fr] gap-6">
           <ProfileHero />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-4">
-            <ProfileActivities />
-            <ProfileAchievements />
-          </div>
         </div>
 
         <ProfileStats />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-4">
+          <ProfileAchievements />
+          <ProfileActivities />
+        </div>
       </div>
     </div>
   );

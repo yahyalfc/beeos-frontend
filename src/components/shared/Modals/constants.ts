@@ -5,5 +5,6 @@ export enum MODALS_QUERIES {
   CHECK_ADDRESS_MODAL = "modal-check-address",
   CONFIRM_MINT = "modal-confirm-mint",
   ALREADY_MINTED = "modal-already-minted",
-  SMTH_WRONG = "modal-smth-went-wrong"
+  SMTH_WRONG = "modal-smth-went-wrong",
+  ACTIVATE_CODE_MODAL = "modal-activate-code",
 }
