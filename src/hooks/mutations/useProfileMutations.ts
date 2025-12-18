@@ -3,6 +3,7 @@ import { toast } from "sonner";
 
 import { useWallet } from "@/components/providers/Wallet.provider";
 import { ProfileService } from "@/services/api/profile.service";
+import { UsersService } from "@/services/api/users.service";
 
 export const useCreateWallet = () => {
   const queryClient = useQueryClient();
@@ -25,7 +26,7 @@ export const useActivateCode = () => {
   return useMutation({
     mutationFn: (code: string) => {
       if (!walletAddress) throw new Error("No wallet connected");
-      return ProfileService.activateCode(walletAddress, code);
+      return UsersService.activateCode(walletAddress, code);
     },
     onSuccess: () => {
       toast.success("Code activated successfully!");

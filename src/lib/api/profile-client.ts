@@ -8,6 +8,7 @@ import axios, {
 
 import { USER_KEY } from "@/utils/constants";
 const NEXT_PUBLIC_PROFILE_API_URL = "https://beeos-dev-api.lumoscodes.dev";
+// process.env.NEXT_PUBLIC_PROFILE_API_URL ||
 export class ProfileApiError extends Error {
   constructor(public status: number, public data: any, message: string) {
     super(message);

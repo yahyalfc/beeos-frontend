@@ -33,15 +33,6 @@ export interface CreateActivityRequest {
   points: number;
 }
 
-export interface ActivateCodeRequest {
-  code: string;
-}
-
-export interface ActivateCodeResponse {
-  success: boolean;
-  message?: string;
-}
-
 export interface PaginatedActivities {
   activities: ProfileActivity[];
   total: number;

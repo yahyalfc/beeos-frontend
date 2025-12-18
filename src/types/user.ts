@@ -77,3 +77,12 @@ export type CreateUserInput = z.infer<typeof CreateUserSchema>;
 export const UpdateUserSchema = CreateUserSchema.partial();
 
 export type UpdateUserInput = z.infer<typeof UpdateUserSchema>;
+
+export interface ActivateCodeRequest {
+  code: string;
+}
+
+export interface ActivateCodeResponse {
+  success: boolean;
+  message?: string;
+}

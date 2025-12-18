@@ -14,6 +14,8 @@ import {
   type UserInitializeProjectBody,
   type UserParticipProjectsArray,
   UserParticipProjectsArraySchema,
+  ActivateCodeRequest,
+  ActivateCodeResponse,
 } from "@/types/user";
 import { type WALLET_STATUSES } from "@/utils/constants";
 
@@ -64,7 +66,7 @@ export class UsersService {
   ): Promise<WALLET_STATUSES> {
     const response = await apiClient.get<WALLET_STATUSES>(
       `/whitelist/check/${reqData.projectId}${
-        reqData.walletAddress ? `/${  reqData.walletAddress}` : ""
+        reqData.walletAddress ? `/${reqData.walletAddress}` : ""
       }`
     );
     return response;
@@ -77,5 +79,16 @@ export class UsersService {
       `/users/generate-signature-message/${address}`
     );
     return GenerateSignUserResponse.parse(response);
+  }
+
+  static async activateCode(
+    wallet: string,
+    code: string
+  ): Promise<ActivateCodeResponse> {
+    const data: ActivateCodeRequest = { code };
+    return apiClient.post<ActivateCodeResponse>(
+      `/users/${wallet}/claimPromoCode`,
+      data
+    );
   }
 }

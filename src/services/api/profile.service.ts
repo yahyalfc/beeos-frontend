@@ -5,8 +5,6 @@ import {
   type ProfileAchievement,
   type CreateWalletRequest,
   type CreateActivityRequest,
-  type ActivateCodeRequest,
-  type ActivateCodeResponse,
 } from "@/types/profile";
 
 export class ProfileService {
@@ -43,17 +41,6 @@ export class ProfileService {
   ): Promise<ProfileAchievement[]> {
     return profileApiClient.get<ProfileAchievement[]>(
       `/wallets/${wallet}/achievements`
-    );
-  }
-
-  static async activateCode(
-    wallet: string,
-    code: string
-  ): Promise<ActivateCodeResponse> {
-    const data: ActivateCodeRequest = { code };
-    return profileApiClient.post<ActivateCodeResponse>(
-      `/wallets/${wallet}/codes`,
-      data
     );
   }
 }
