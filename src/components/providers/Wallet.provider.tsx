@@ -16,8 +16,8 @@ import {
   useGenerateSignUser,
   useInitializeUser,
 } from "@/hooks/mutations/use-user-mutations";
+import { useCreateWallet } from "@/hooks/mutations/useProfileMutations";
 import { USER_KEY, CONNECTED_STATUS } from "@/utils/constants";
-
 
 interface WalletContextType {
   isConnected: boolean;
@@ -46,6 +46,7 @@ export function WalletProvider({ children }: Readonly<WalletProviderProps>) {
   const { signMessageAsync } = useSignMessage();
   const generateSignMutation = useGenerateSignUser();
   const initializeUserMutation = useInitializeUser();
+  const { mutate: createWallet } = useCreateWallet();
 
   // States
   const [token, setToken] = useState<string | null>(null);
@@ -81,6 +82,28 @@ export function WalletProvider({ children }: Readonly<WalletProviderProps>) {
 
   const isNeededSign = isConnected && !token;
 
+  const createWalletCallback = useCallback(
+    async (walletAddress: string) => {
+      return new Promise<void>((resolve, reject) => {
+        createWallet(walletAddress, {
+          onSuccess: () => {
+            console.log(
+              "Wallet created successfully for address:",
+              walletAddress
+            );
+            resolve();
+          },
+          onError: (error) => {
+            console.error("Failed to create wallet:", error);
+            toast.error("Failed to create wallet");
+            reject(error);
+          },
+        });
+      });
+    },
+    [createWallet]
+  );
+
   const handleSignMessage = useCallback(
     async (address: string) => {
       setIsLoading(true);
@@ -91,7 +114,7 @@ export function WalletProvider({ children }: Readonly<WalletProviderProps>) {
 
       try {
         const messageResponse = await generateSignMutation.mutateAsync(address);
-        const {message} = messageResponse;
+        const { message } = messageResponse;
 
         // Sign message
         const signature = await signMessageAsync({
@@ -122,18 +145,26 @@ export function WalletProvider({ children }: Readonly<WalletProviderProps>) {
         // Persist to localStorage
         localStorage.setItem(USER_KEY, jwtToken);
 
+        // Create wallet after successful user initialization
+        await createWalletCallback(address);
+
         toast.success("Authentication successful");
       } catch (error) {
         const errorMessage =
           error instanceof Error ? error.message : "Authentication failed";
         setError(new Error(errorMessage));
 
-        toast.error(`Authentication Failed: ${  errorMessage}`);
+        toast.error(`Authentication Failed: ${errorMessage}`);
       } finally {
         setIsLoading(false);
       }
     },
-    [generateSignMutation, initializeUserMutation, signMessageAsync]
+    [
+      generateSignMutation,
+      initializeUserMutation,
+      signMessageAsync,
+      createWalletCallback,
+    ]
   );
 
   // Handle wallet connection
