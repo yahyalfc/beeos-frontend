@@ -21,18 +21,18 @@ export const ProfileStats: FC = () => {
         </h2>
 
         {/* THESE BUTTONS CONTROL SWIPER */}
-        <div className="buttonheader_card flex gap-2">
+        {/* <div className="buttonheader_card flex gap-2">
           <button className="swiper-prev">
             <img src="/prev_btn.svg" alt="prev" />
           </button>
           <button className="swiper-next">
             <img src="/next_btn.svg" alt="next" />
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* SLIDER */}
-      <Swiper
+      {/* <Swiper
         modules={[Navigation]}
         spaceBetween={24}
         slidesPerView={1}
@@ -45,58 +45,94 @@ export const ProfileStats: FC = () => {
           1024: { slidesPerView: 4 },
         }}
         className="card_prnt"
-      >
-        <SwiperSlide>
-          <Card
-            icon={<Lock className="w-8 h-8 text-accent" />}
-            title="NFT Staking"
-            desc="Lock your BeeOS NFTs to earn passive rewards."
-            btn="Stake now"
-          />
-        </SwiperSlide>
+      > */}
+      {/* <SwiperSlide> */}
+      <div className="prnt_top_grid">
+        <Card
+          icon={<Lock className="w-8 h-8 text-accent" />}
+          title="NFT Staking"
+          desc="Lock your BeeOS NFTs to earn passive rewards."
+          btn="Stake now"
+        />
+        <Card
+          icon={<Rocket className="w-8 h-8 text-accent" />}
+          title="Mint on Launchpad"
+          desc="Get early access to premium NFT collections."
+          btn="Explore mints"
+        />
+        <Card
+          icon={<Target className="w-8 h-8 text-accent" />}
+          title="Community Raffles"
+          desc="Participate in Discord events and win prizes."
+          btn="Join Discord"
+        />
+      </div>
+      <div className="grid_template_sec">
+
+
+        <Card
+          icon={<Target className="w-8 h-8 text-accent" />}
+          title="Stake BeeOS NFT"
+          desc="Yes, this is the official release. All items and details have been verified by our team to ensure authenticity and quality. "
+          btn="Community Raffles"
+        />
+        <Card
+          icon={<Target className="w-8 h-8 text-accent" />}
+          title="Mint NFT on Launchpad"
+          desc="Yes, this is the official release. All items and details have been verified by our team to ensure authenticity and quality. "
+          btn="Community Raffles"
+        />
+      </div>
+      {/* <Card
+        icon={<Lock className="w-8 h-8 text-accent" />}
+        title="NFT Staking"
+        desc="Lock your BeeOS NFTs to earn passive rewards."
+        btn="Stake now"
+      />
+      </SwiperSlide>
 
         <SwiperSlide>
-          <Card
-            icon={<Rocket className="w-8 h-8 text-accent" />}
-            title="Mint on Launchpad"
-            desc="Get early access to premium NFT collections."
-            btn="Explore mints"
-          />
-        </SwiperSlide>
+      <Card
+        icon={<Rocket className="w-8 h-8 text-accent" />}
+        title="Mint on Launchpad"
+        desc="Get early access to premium NFT collections."
+        btn="Explore mints"
+      />
+      </SwiperSlide>
 
         <SwiperSlide>
-          <Card
-            icon={<Target className="w-8 h-8 text-accent" />}
-            title="Community Raffles"
-            desc="Participate in Discord events and win prizes."
-            btn="Join Discord"
-          />
-        </SwiperSlide>
+      <Card
+        icon={<Target className="w-8 h-8 text-accent" />}
+        title="Community Raffles"
+        desc="Participate in Discord events and win prizes."
+        btn="Join Discord"
+      />
+      </SwiperSlide>
         <SwiperSlide>
-          <Card
-            icon={<Target className="w-8 h-8 text-accent" />}
-            title="Community Raffles"
-            desc="Participate in Discord events and win prizes."
-            btn="Join Discord"
-          />
-        </SwiperSlide>
+      <Card
+        icon={<Target className="w-8 h-8 text-accent" />}
+        title="Community Raffles"
+        desc="Participate in Discord events and win prizes."
+        btn="Join Discord"
+      />
+      </SwiperSlide>
         <SwiperSlide>
-          <Card
-            icon={<Target className="w-8 h-8 text-accent" />}
-            title="Community Raffles"
-            desc="Participate in Discord events and win prizes."
-            btn="Join Discord"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card
-            icon={<Target className="w-8 h-8 text-accent" />}
-            title="Community Raffles"
-            desc="Participate in Discord events and win prizes."
-            btn="Join Discord"
-          />
-        </SwiperSlide>
-      </Swiper>
+      <Card
+        icon={<Target className="w-8 h-8 text-accent" />}
+        title="Community Raffles"
+        desc="Participate in Discord events and win prizes."
+        btn="Join Discord"
+      />
+      </SwiperSlide>
+      <SwiperSlide>
+      <Card
+        icon={<Target className="w-8 h-8 text-accent" />}
+        title="Community Raffles"
+        desc="Participate in Discord events and win prizes."
+        btn="Join Discord"
+      />
+      </SwiperSlide>
+       </Swiper>  */}
     </div>
   );
 };

@@ -319,6 +319,24 @@
   font-size: 14px;
   color: #a7bcc0;
 }
+
+.prnt_top_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 2fr);
+  gap: 20px;
+}
+
+.grid_template_sec {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.infobtn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: 99;
+}
 @media (max-width: 991px) {
   .hero-content {
     display: flex;
